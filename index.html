@@ -8,6 +8,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Noto+Sans+Mongolian&family=VT323&display=swap"
     rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
     :root {
@@ -110,13 +111,18 @@
       border-right: 6px solid var(--green);
     }
 
-    /* Floating emojis */
+    /* Floating icons */
     .floater {
       position: fixed;
-      font-size: 2rem;
       pointer-events: none;
       z-index: 1;
       animation: floatUpDown 3s ease-in-out infinite;
+    }
+
+    .floater svg {
+      width: 32px;
+      height: 32px;
+      stroke-width: 1.5;
     }
 
     @keyframes floatUpDown {
@@ -297,12 +303,18 @@
     .cake-row {
       display: flex;
       gap: 16px;
-      font-size: 2.2rem;
+      align-items: center;
     }
 
     .cake-row span {
-      display: inline-block;
+      display: inline-flex;
       animation: floatUpDown 2.5s ease-in-out infinite;
+    }
+
+    .cake-row span svg {
+      width: 36px;
+      height: 36px;
+      stroke-width: 1.5;
     }
 
     .cake-row span:nth-child(2) {
@@ -526,9 +538,16 @@
       text-align: center;
     }
 
-    .modal-emoji {
-      font-size: 3rem;
+    .modal-icon {
       margin-bottom: 12px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .modal-icon svg {
+      width: 52px;
+      height: 52px;
+      stroke-width: 1.5;
     }
 
     .modal-msg {
@@ -581,18 +600,55 @@
   <!-- Confetti -->
   <div class="confetti-wrap" id="confettiWrap"></div>
 
-  <!-- Floating emojis -->
-  <div class="floater" style="top:8%; left:5%; animation-delay:0s;">🌸</div>
-  <div class="floater" style="top:15%; right:7%; animation-delay:0.7s;">⭐</div>
-  <div class="floater" style="bottom:20%; left:8%; animation-delay:1.2s;">🎀</div>
-  <div class="floater" style="bottom:12%; right:6%; animation-delay:0.4s;">✨</div>
-  <div class="floater" style="top:50%; left:3%; animation-delay:1.8s; font-size:1.4rem;">💌</div>
+  <!-- Floating icons -->
+  <div class="floater" style="top:8%; left:5%; animation-delay:0s;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ff6eb4" stroke-linecap="round"
+      stroke-linejoin="round">
+      <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10S17.5 2 12 2" />
+      <path d="M12 8v4l2 2" />
+    </svg>
+  </div>
+  <div class="floater" style="top:15%; right:7%; animation-delay:0.7s;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ffe94a" stroke="#e0a800" stroke-linecap="round"
+      stroke-linejoin="round">
+      <polygon
+        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+    </svg>
+  </div>
+  <div class="floater" style="bottom:20%; left:8%; animation-delay:1.2s;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ff6eb4" stroke-linecap="round"
+      stroke-linejoin="round">
+      <path
+        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+    </svg>
+  </div>
+  <div class="floater" style="bottom:12%; right:6%; animation-delay:0.4s;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ffe94a" stroke="#e0a800" stroke-linecap="round"
+      stroke-linejoin="round">
+      <polygon
+        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+    </svg>
+  </div>
+  <div class="floater" style="top:50%; left:3%; animation-delay:1.8s;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#d8b4fe" stroke-linecap="round"
+      stroke-linejoin="round" style="width:24px;height:24px">
+      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+      <polyline points="22,6 12,13 2,6" />
+    </svg>
+  </div>
 
   <!-- Main window -->
   <main class="window">
 
     <div class="titlebar">
-      <span class="titlebar-label">🎂 Torson_Odor.exe — Тусгай мессеж</span>
+      <span class="titlebar-label" style="display:flex;align-items:center;gap:6px;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-linecap="round"
+          stroke-linejoin="round" style="width:14px;height:14px;stroke-width:2;">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+          <circle cx="12" cy="7" r="4" />
+        </svg>
+        Torson_Odor.exe — Тусгай мессеж
+      </span>
       <div class="win-btns">
         <button class="win-btn btn-min" onclick="openModal('min')">_</button>
         <button class="win-btn btn-max" onclick="openModal('max')">□</button>
@@ -614,7 +670,34 @@
 
       <!-- Cakes -->
       <div class="cake-row">
-        <span>🎂</span><span>🎉</span><span>🎈</span><span>🎁</span>
+        <span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ff2d78"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8" />
+            <path d="M4 21h16" />
+            <path d="M2 21h20" />
+            <path d="M7 13v-3a5 5 0 0 1 10 0v3" />
+            <line x1="12" y1="2" x2="12" y2="4" />
+          </svg></span>
+        <span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#1d82ff"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+            <line x1="9" y1="9" x2="9.01" y2="9" />
+            <line x1="15" y1="9" x2="15.01" y2="9" />
+          </svg></span>
+        <span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#59f425"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path
+              d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+          </svg></span>
+        <span><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffe94a"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="20 12 20 22 4 22 4 12" />
+            <rect x="2" y="7" width="20" height="5" />
+            <line x1="12" y1="22" x2="12" y2="7" />
+            <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z" />
+            <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" />
+          </svg></span>
       </div>
 
       <!-- Message -->
@@ -661,7 +744,15 @@
         <button class="modal-close" onclick="closeModal()">✕</button>
       </div>
       <div class="modal-body">
-        <div class="modal-emoji" id="modalEmoji">🎉</div>
+        <div class="modal-icon" id="modalIcon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#1d82ff"
+            stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M8 14s1.5 2 4 2 4-2 4-2" />
+            <line x1="9" y1="9" x2="9.01" y2="9" />
+            <line x1="15" y1="9" x2="15.01" y2="9" />
+          </svg>
+        </div>
         <div class="modal-msg" id="modalMsg"></div>
         <button class="modal-btn" onclick="closeModal()">ХААХ</button>
       </div>
@@ -688,18 +779,25 @@
       wrap.appendChild(el);
     }
 
-    // Modal
+    // Modal icons (inline SVG strings)
+    const icons = {
+      start: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#59f425" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>`,
+      cancel: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ff2d78" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>`,
+      close: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ff4444" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>`,
+      min: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffe94a" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 15h8"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>`,
+      max: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#1d82ff" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>`,
+    };
     const modals = {
-      start: { emoji: '🎉', title: 'Эхэлье!', msg: 'Тусгай өдөр амжилттай нээгдлээ! Аз жаргалаар дүүрэн өдөр өнгөрүүлэхийг хүснэ!' },
-      cancel: { emoji: '🚫', title: 'Алдаа', msg: 'ERROR 404: Төрсөн өдрийг цуцлах боломжгүй. Дахин оролдно уу — ч ялгаагүй болохгүй!' },
-      close: { emoji: '💀', title: 'Алдаа', msg: 'Хаах боломжгүй! Төрсөн өдрийн баяр чиний компьютерт суугдсан байна.' },
-      min: { emoji: '😅', title: 'Оролдоогүй!', msg: 'Нуух гэж үзсэн үү? Энэ мессеж хаашаа ч явахгүй!' },
-      max: { emoji: '🖥️', title: 'Томруулав!', msg: 'Хайр нь аль хэдийн дэлгэцийг дүүргэж байна — зай хүрэлцэхгүй!' },
+      start: { icon: icons.start, title: 'Эхэлье!', msg: 'Тусгай өдөр амжилттай нээгдлээ! Аз жаргалаар дүүрэн өдөр өнгөрүүлэхийг хүснэ!' },
+      cancel: { icon: icons.cancel, title: 'Алдаа', msg: 'ERROR 404: Төрсөн өдрийг цуцлах боломжгүй. Дахин оролдно уу — ч ялгаагүй болохгүй!' },
+      close: { icon: icons.close, title: 'Алдаа', msg: 'Хаах боломжгүй! Төрсөн өдрийн баяр чиний компьютерт суугдсан байна.' },
+      min: { icon: icons.min, title: 'Оролдоогүй!', msg: 'Нуух гэж үзсэн үү? Энэ мессеж хаашаа ч явахгүй!' },
+      max: { icon: icons.max, title: 'Томруулав!', msg: 'Хайр нь аль хэдийн дэлгэцийг дүүргэж байна — зай хүрэлцэхгүй!' },
     };
 
     function openModal(type) {
       const m = modals[type];
-      document.getElementById('modalEmoji').textContent = m.emoji;
+      document.getElementById('modalIcon').innerHTML = m.icon;
       document.getElementById('modalTitle').textContent = m.title;
       document.getElementById('modalMsg').textContent = m.msg;
       document.getElementById('modalOverlay').classList.add('active');
