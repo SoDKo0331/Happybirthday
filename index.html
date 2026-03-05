@@ -586,10 +586,257 @@
         padding: 16px;
       }
     }
+
+    /* ===== INTRO SCREEN ===== */
+    #introScreen {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: var(--black);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    #introScreen.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .intro-window {
+      background: var(--cream);
+      border: 3px solid var(--hot-pink);
+      box-shadow: 10px 10px 0 var(--hot-pink);
+      width: min(480px, 92vw);
+      animation: popIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    .intro-titlebar {
+      background: var(--hot-pink);
+      border-bottom: 3px solid var(--black);
+      height: 40px;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      gap: 8px;
+    }
+
+    .intro-titlebar span {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 8px;
+      color: #fff;
+      letter-spacing: 1px;
+    }
+
+    .intro-body {
+      padding: 36px 28px 28px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .intro-icon-wrap {
+      width: 72px;
+      height: 72px;
+      background: var(--lavender);
+      border: 3px solid var(--black);
+      box-shadow: 4px 4px 0 var(--black);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .intro-icon-wrap svg {
+      width: 38px;
+      height: 38px;
+    }
+
+    .intro-title {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(10px, 3vw, 14px);
+      color: var(--hot-pink);
+      line-height: 1.6;
+      -webkit-text-stroke: 0.5px var(--black);
+      text-shadow: 2px 2px 0 var(--black);
+    }
+
+    .intro-sub {
+      font-family: 'VT323', monospace;
+      font-size: 18px;
+      color: #666;
+      letter-spacing: 1px;
+    }
+
+    .intro-hint {
+      font-family: 'VT323', monospace;
+      font-size: 14px;
+      color: #aaa;
+      letter-spacing: 2px;
+      border: 1px dashed #ccc;
+      padding: 4px 10px;
+      text-transform: uppercase;
+      min-height: 24px;
+      transition: color 0.3s;
+    }
+
+    .intro-hint.angry {
+      color: var(--hot-pink);
+      border-color: var(--hot-pink);
+    }
+
+    .intro-btns {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .intro-btn-open {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 9px;
+      padding: 13px 22px;
+      background: var(--green);
+      border: 2.5px solid var(--black);
+      box-shadow: 5px 5px 0 var(--black);
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: transform 0.08s, box-shadow 0.08s;
+    }
+
+    .intro-btn-open:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 7px 7px 0 var(--black);
+    }
+
+    .intro-btn-open:active {
+      transform: translate(4px, 4px);
+      box-shadow: 1px 1px 0 var(--black);
+    }
+
+    .intro-btn-close {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 9px;
+      padding: 13px 22px;
+      background: #e5e5e5;
+      border: 2.5px solid var(--black);
+      box-shadow: 5px 5px 0 var(--black);
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: transform 0.08s, box-shadow 0.08s, background 0.2s;
+    }
+
+    .intro-btn-close:hover {
+      background: #d0d0d0;
+    }
+
+    .intro-btn-close:active {
+      transform: translate(4px, 4px);
+      box-shadow: 1px 1px 0 var(--black);
+    }
+
+    .intro-btn-close.troll-move {
+      position: relative;
+      animation: btnEscape 0.4s ease forwards;
+    }
+
+    @keyframes btnEscape {
+      0% {
+        transform: translate(0, 0);
+      }
+
+      30% {
+        transform: translate(80px, -30px);
+      }
+
+      60% {
+        transform: translate(-50px, 20px);
+      }
+
+      100% {
+        transform: translate(60px, -10px);
+      }
+    }
+
+    @keyframes shake {
+
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+
+      15% {
+        transform: translateX(-10px) rotate(-1deg);
+      }
+
+      30% {
+        transform: translateX(10px) rotate(1deg);
+      }
+
+      45% {
+        transform: translateX(-8px);
+      }
+
+      60% {
+        transform: translateX(8px);
+      }
+
+      75% {
+        transform: translateX(-4px);
+      }
+
+      90% {
+        transform: translateX(4px);
+      }
+    }
+
+    .intro-window.shake {
+      animation: shake 0.5s ease both;
+    }
   </style>
 </head>
 
 <body>
+
+  <!-- ===== INTRO SCREEN ===== -->
+  <div id="introScreen">
+    <div class="intro-window" id="introWindow">
+      <div class="intro-titlebar">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-linecap="round"
+          stroke-linejoin="round" style="width:12px;height:12px;stroke-width:2.5;flex-shrink:0">
+          <rect x="2" y="3" width="20" height="14" rx="2" />
+          <line x1="8" y1="21" x2="16" y2="21" />
+          <line x1="12" y1="17" x2="12" y2="21" />
+        </svg>
+        <span>System_Message.exe</span>
+      </div>
+      <div class="intro-body">
+        <div class="intro-icon-wrap">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ff2d78"
+            stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+            <path d="M20 21v-8a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8" />
+            <path d="M4 21h16" />
+            <path d="M2 21h20" />
+            <path d="M7 13v-3a5 5 0 0 1 10 0v3" />
+            <line x1="12" y1="2" x2="12" y2="4" />
+          </svg>
+        </div>
+        <div class="intro-title">Чамд тусгай<br>мессеж ирлээ!</div>
+        <div class="intro-sub">[ Нэг удаа л ирдэг мессеж ]</div>
+        <div class="intro-hint" id="introHint">Юу хийхийг сонгоно уу...</div>
+        <div class="intro-btns">
+          <button class="intro-btn-open" id="btnOpen" onclick="openGreeting()">▶ Нээх</button>
+          <button class="intro-btn-close" id="btnClose" onclick="tryClose()">✕ Хаах</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- Corner decorations -->
   <div class="corner corner-tl"></div>
@@ -810,6 +1057,53 @@
     document.getElementById('modalOverlay').addEventListener('click', function (e) {
       if (e.target === this) closeModal();
     });
+
+    // ===== INTRO SCREEN LOGIC =====
+    let closeAttempts = 0;
+    const hints = [
+      'Яахав нээгээрэй дээ...',
+      'Үнэхээр хаах гэж байна уу?? 😬',
+      'Болохгүй л байна шүү дээ!',
+      'Хаах товч нь жаахан айж байна...',
+      'Ойлголоо, дараагийн удаа оролдоорой 💀',
+      'ХААХ БОЛОМЖГҮЙ. АЗ ЖАРГАЛ СУУГДСАН.',
+    ];
+
+    function openGreeting() {
+      const intro = document.getElementById('introScreen');
+      intro.classList.add('fade-out');
+      setTimeout(() => { intro.style.display = 'none'; }, 500);
+    }
+
+    function tryClose() {
+      closeAttempts++;
+      const hint = document.getElementById('introHint');
+      const win = document.getElementById('introWindow');
+      const btn = document.getElementById('btnClose');
+
+      hint.textContent = hints[Math.min(closeAttempts - 1, hints.length - 1)];
+      hint.classList.add('angry');
+
+      // Shake window
+      win.classList.remove('shake');
+      void win.offsetWidth; // reflow to restart animation
+      win.classList.add('shake');
+      win.addEventListener('animationend', () => win.classList.remove('shake'), { once: true });
+
+      if (closeAttempts >= 3) {
+        // Button runs away
+        btn.classList.add('troll-move');
+        btn.addEventListener('animationend', () => {
+          btn.classList.remove('troll-move');
+          btn.style.display = 'none';
+        }, { once: true });
+      }
+
+      if (closeAttempts >= 5) {
+        // Force open after enough attempts
+        setTimeout(() => openGreeting(), 800);
+      }
+    }
   </script>
 
 </body>
