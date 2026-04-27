@@ -1,718 +1,1065 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="mn">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Konnichiwa! 🐾</title>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700;900&display=swap" rel="stylesheet">
+    <title>STAY ROCK 🤘</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Permanent+Marker&family=Teko:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
     <style>
         :root {
-            --blue: #4361EE;
-            --light-blue: #A2E4F9;
-            --yellow: #F9C80E;
-            --pink: #F72585;
-            --card-bg: #FFFFFF;
-            --border-color: #1A1A1A;
-            --text-color: #1A1A1A;
-            --text-bg-jp: var(--yellow);
-            --text-bg-en: var(--pink);
-            --text-bg-mn: var(--blue);
-            --bg-grid: rgba(67, 97, 238, 0.3);
-            --btn-text: var(--text-color);
+            --bg: #0a0a0a;
+            --surface: #111111;
+            --surface2: #1a1a1a;
+            --text: #f0ede6;
+            --red: #e63329;
+            --yellow: #f5c842;
+            --dim: #444444;
+            --grid: rgba(240, 237, 230, 0.04);
         }
 
-        [data-theme="dark"] {
-            --light-blue: #0F0F0F;
-            --blue: #4CC9F0;
-            --yellow: #F9C80E;
-            --pink: #F72585;
-            --card-bg: #1A1A1A;
-            --border-color: #F8F9FA;
-            --text-color: #F8F9FA;
-            --text-bg-jp: var(--yellow);
-            --text-bg-en: var(--pink);
-            --text-bg-mn: var(--blue);
-            --bg-grid: rgba(248, 249, 250, 0.15);
-            --btn-text: #1A1A1A;
+        [data-theme="light"] {
+            --bg: #f0ede6;
+            --surface: #e8e4da;
+            --surface2: #ddd8cc;
+            --text: #0a0a0a;
+            --red: #e63329;
+            --yellow: #d4a800;
+            --dim: #aaaaaa;
+            --grid: rgba(0, 0, 0, 0.06);
         }
 
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+            box-sizing: border-box;
         }
 
         body {
-            background-color: var(--light-blue);
-            background-image: 
-                linear-gradient(var(--bg-grid) 2px, transparent 2px),
-                linear-gradient(90deg, var(--bg-grid) 2px, transparent 2px);
-            background-size: 50px 50px;
-            font-family: 'Space Grotesk', system-ui, sans-serif;
+            background: var(--bg);
+            background-image:
+                linear-gradient(var(--grid) 1px, transparent 1px),
+                linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+            background-size: 48px 48px;
+            font-family: 'Space Mono', monospace;
             min-height: 100vh;
             display: flex;
-            justify-content: center;
             align-items: center;
-            overflow-x: hidden;
-            position: relative;
+            justify-content: center;
+            color: var(--text);
+            overflow: hidden;
+            transition: background 0.5s, color 0.5s;
         }
 
-        /* Dark / Light Toggle Button */
-        #theme-toggle {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background-color: var(--card-bg);
-            color: var(--text-color);
-            border: 4px solid var(--border-color);
-            padding: 10px 15px;
-            font-family: inherit;
-            font-weight: bold;
-            font-size: 1rem;
-            cursor: pointer;
-            box-shadow: 4px 4px 0px var(--border-color);
-            border-radius: 8px;
-            z-index: 100;
-            transform: rotate(2deg);
+        /* ─── SCANLINES ─── */
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(to bottom,
+                    transparent 0px, transparent 3px,
+                    rgba(0, 0, 0, 0.07) 3px, rgba(0, 0, 0, 0.07) 4px);
+            pointer-events: none;
+            z-index: 9999;
         }
 
-        #theme-toggle:hover {
-            transform: scale(1.05) rotate(-2deg);
-            background-color: var(--yellow);
-            color: #1A1A1A;
-        }
-        
-        #theme-toggle:active {
-            transform: scale(0.95);
-            box-shadow: 2px 2px 0px var(--border-color);
-        }
-
-        /* Background Animated Paws & Shapes */
-        #bg-elements {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+        /* ─── FLOATING PARTICLES ─── */
+        #particles {
+            position: fixed;
+            inset: 0;
             pointer-events: none;
             z-index: 0;
             overflow: hidden;
         }
 
-        .floating-shape {
+        .particle {
             position: absolute;
-            opacity: 0.8;
-            stroke: var(--border-color);
-            stroke-width: 4px;
-            fill: none;
-            animation: floatUp 15s linear infinite;
+            opacity: 0.12;
+            color: var(--text);
+            font-family: 'Bebas Neue', sans-serif;
+            animation: drift linear infinite;
+            user-select: none;
         }
 
-        .floating-paw {
-            position: absolute;
-            font-size: 2rem;
-            opacity: 0.4;
-            animation: floatUp linear infinite;
-            filter: drop-shadow(2px 2px 0px var(--border-color));
+        @keyframes drift {
+            from {
+                transform: translateY(110vh) rotate(0deg);
+            }
+
+            to {
+                transform: translateY(-20vh) rotate(360deg);
+            }
         }
 
-        @keyframes floatUp {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.5; }
-            90% { opacity: 0.5; }
-            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        /* ─── THEME TOGGLE ─── */
+        #theme-btn {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            z-index: 1000;
+            background: transparent;
+            border: 2px solid var(--text);
+            color: var(--text);
+            font-family: 'Space Mono', monospace;
+            font-size: 0.7rem;
+            padding: 8px 14px;
+            cursor: pointer;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.2s;
         }
 
-        /* Main Card Layout */
-        .card {
-            position: relative;
-            z-index: 10;
-            background-color: var(--card-bg);
-            border: 6px solid var(--border-color);
-            border-radius: 12px; /* Harder corners for robust feel */
-            padding: 60px 40px 40px;
-            max-width: 550px;
-            width: 90%;
-            text-align: center;
-            box-shadow: 15px 15px 0px var(--border-color);
-            transform: rotate(-1.5deg);
-            transition: transform 0.3s ease;
-            margin-top: 50px;
+        #theme-btn:hover {
+            background: var(--text);
+            color: var(--bg);
         }
 
-        .card:hover {
-            transform: rotate(0deg) scale(1.01);
-        }
-
-        /* --- CSS Built Cute Cat --- */
-        .cat-wrapper {
-            position: absolute;
-            top: -90px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 140px;
-            height: 120px;
-            z-index: 15;
-            pointer-events: none;
-        }
-
-        .cat-head {
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 130px;
-            height: 90px;
-            background-color: var(--yellow);
-            border: 5px solid var(--border-color);
-            border-radius: 50px 50px 40px 40px;
-            z-index: 3;
-        }
-
-        .cat-ear {
-            position: absolute;
-            top: 5px;
-            width: 40px;
-            height: 50px;
-            background-color: var(--yellow);
-            border: 5px solid var(--border-color);
-            z-index: 2;
-        }
-
-        .cat-ear::after {
-            content: '';
-            position: absolute;
-            bottom: -3px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 18px;
-            height: 30px;
-            background-color: var(--pink);
-            border: 4px solid var(--border-color);
-            border-bottom: none;
-            border-radius: 16px 16px 0 0;
-        }
-
-        .left-ear {
-            left: 8px;
-            border-radius: 40px 0 0 0;
-            transform: rotate(-25deg);
-            transform-origin: bottom right;
-            animation: ear-wiggle-left 3s infinite;
-        }
-
-        .right-ear {
-            right: 8px;
-            border-radius: 0 40px 0 0;
-            transform: rotate(25deg);
-            transform-origin: bottom left;
-            animation: ear-wiggle-right 3.5s infinite;
-        }
-
-        @keyframes ear-wiggle-left {
-            0%, 80%, 100% { transform: rotate(-25deg); }
-            90% { transform: rotate(-40deg); }
-        }
-
-        @keyframes ear-wiggle-right {
-            0%, 75%, 100% { transform: rotate(25deg); }
-            85% { transform: rotate(40deg); }
-        }
-
-        .cat-eyes {
-            position: absolute;
-            top: 35px;
+        /* ─── HUD OVERLAYS ─── */
+        .hud {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            display: flex;
-            justify-content: space-evenly;
-        }
-
-        /* Eye tracking support */
-        .cat-eye {
-            width: 22px;
-            height: 26px;
-            background-color: var(--card-bg);
-            border: 4px solid var(--border-color);
-            border-radius: 50%;
-            position: relative;
-            overflow: hidden;
-            animation: blink 4s infinite;
-        }
-
-        .pupil {
-            position: absolute;
-            width: 12px;
-            height: 14px;
-            background-color: var(--border-color);
-            border-radius: 50%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            /* Smooth tracking */
-            transition: transform 0.1s ease-out, background-color 0.3s ease;
-        }
-
-        @keyframes blink {
-            0%, 46%, 48%, 100% { transform: scaleY(1); }
-            47%, 49% { transform: scaleY(0.1); }
-        }
-
-        .cat-nose {
-            position: absolute;
-            top: 55px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 18px;
-            height: 12px;
-            background-color: var(--pink);
-            border: 3px solid var(--border-color);
-            border-radius: 50%;
-        }
-
-        .cat-mouth {
-            position: absolute;
-            top: 63px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 24px;
-            height: 12px;
-            border-bottom: 4px solid var(--border-color);
-            border-left: 4px solid transparent;
-            border-right: 4px solid transparent;
-            border-radius: 50%;
-        }
-
-        .cat-whiskers {
-            position: absolute;
-            top: 45px;
-            width: 25px;
-            height: 18px;
+            height: 100%;
+            pointer-events: none;
+            z-index: 500;
+            padding: 24px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
 
-        .left-whiskers { left: -15px; }
-        .right-whiskers { right: -15px; }
+        .hud-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
 
-        .whisker {
-            width: 100%;
-            height: 4px;
-            background-color: var(--border-color);
+        .rec-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.65rem;
+            letter-spacing: 3px;
+            color: var(--red);
+            font-weight: 700;
+        }
+
+        .rec-dot {
+            width: 9px;
+            height: 9px;
+            background: var(--red);
+            border-radius: 50%;
+            animation: blink 0.9s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+
+            0%,
+            100% {
+                opacity: 1
+            }
+
+            50% {
+                opacity: 0
+            }
+        }
+
+        .hud-clock {
+            font-size: 0.65rem;
+            letter-spacing: 2px;
+            opacity: 0.6;
+            text-align: right;
+            line-height: 1.6;
+        }
+
+        .hud-bottom {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            font-size: 0.6rem;
+            letter-spacing: 2px;
+            opacity: 0.4;
+            line-height: 1.8;
+        }
+
+        /* ─── MAIN CARD ─── */
+        .stage {
+            position: relative;
+            z-index: 10;
+            width: min(500px, 95vw);
+            margin: 60px auto;
+        }
+
+        /* Cassette hanging above */
+        .cassette {
+            position: absolute;
+            top: -90px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-4deg);
+            width: 200px;
+            background: var(--surface);
+            border: 3px solid var(--text);
+            border-radius: 6px;
+            padding: 12px;
+            box-shadow: 6px 6px 0 var(--text);
+            animation: sway 5s ease-in-out infinite;
+            z-index: 20;
+        }
+
+        @keyframes sway {
+
+            0%,
+            100% {
+                transform: translateX(-50%) rotate(-4deg);
+            }
+
+            50% {
+                transform: translateX(-52%) rotate(-2deg);
+            }
+        }
+
+        .cassette-label {
+            background: var(--yellow);
+            color: #000;
+            padding: 6px 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 6px;
+        }
+
+        .cassette-label-text {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+        }
+
+        .reel-row {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 4px 0;
+        }
+
+        .reel {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--bg);
+            border: 3px dashed var(--text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: spin 2.5s linear infinite;
+        }
+
+        .reel::after {
+            content: "";
+            width: 10px;
+            height: 10px;
+            background: var(--text);
+            border-radius: 50%;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg)
+            }
+
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        .tape-slot {
+            width: 60px;
+            height: 18px;
+            background: var(--bg);
+            border: 2px solid var(--dim);
             border-radius: 2px;
         }
 
-        .left-whiskers .whisker:first-child { transform: rotate(10deg); }
-        .left-whiskers .whisker:last-child { transform: rotate(-10deg); }
-        .right-whiskers .whisker:first-child { transform: rotate(-10deg); }
-        .right-whiskers .whisker:last-child { transform: rotate(10deg); }
+        /* The Card */
+        .card {
+            background: var(--surface);
+            border: 3px solid var(--text);
+            padding: 48px 36px 36px;
+            position: relative;
+            box-shadow: 8px 8px 0 var(--text);
+            overflow: hidden;
+            transition: background 0.5s;
+        }
 
-        .cat-tail {
+        /* Corner brackets */
+        .bracket {
             position: absolute;
-            bottom: 20px;
-            right: -20px;
-            width: 60px;
-            height: 50px;
-            border-bottom: 8px solid var(--border-color);
-            border-right: 8px solid var(--border-color);
-            border-radius: 0 0 40px 0;
-            transform-origin: left center;
-            animation: tail-wag 2s infinite alternate ease-in-out;
-            z-index: 1;
+            width: 22px;
+            height: 22px;
+            border-color: var(--text);
+            border-style: solid;
         }
 
-        @keyframes tail-wag {
-            0% { transform: rotate(10deg); }
-            100% { transform: rotate(35deg); }
+        .bracket.tl {
+            top: 10px;
+            left: 10px;
+            border-width: 3px 0 0 3px;
         }
 
-        /* --- Content Layout --- */
-        .title-text {
-            font-size: 2.3rem;
-            font-weight: 900;
-            line-height: 1.2;
-            margin-bottom: 25px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
+        .bracket.tr {
+            top: 10px;
+            right: 10px;
+            border-width: 3px 3px 0 0;
         }
 
-        .title-text span {
-            display: inline-block;
-            padding: 4px 18px;
-            border: 4px solid var(--border-color);
-            border-radius: 4px; /* brutalism square-ish */
-            box-shadow: 5px 5px 0px var(--border-color);
-            position: relative;
+        .bracket.bl {
+            bottom: 10px;
+            left: 10px;
+            border-width: 0 0 3px 3px;
         }
 
-        /* Glitch Hover Effect */
-        .glitch-hover {
-            position: relative;
-            cursor: default;
-        }
-        
-        .glitch-hover:hover {
-            animation: hoverGlitch 0.2s cubic-bezier(.25, .46, .45, .94) both infinite;
+        .bracket.br {
+            bottom: 10px;
+            right: 10px;
+            border-width: 0 3px 3px 0;
         }
 
-        @keyframes hoverGlitch {
-            0% { transform: translate(0) scale(1) rotate(0deg); }
-            20% { transform: translate(-3px, 3px) scale(1.02) rotate(-1deg); }
-            40% { transform: translate(-3px, -3px) scale(0.98) rotate(1deg); }
-            60% { transform: translate(3px, 3px) scale(1.02) rotate(-1deg); }
-            80% { transform: translate(3px, -3px) scale(0.98) rotate(1deg); }
-            100% { transform: translate(0) scale(1) rotate(0deg); }
-        }
-
-        .lang-jp { background-color: var(--text-bg-jp); color: #1A1A1A; transform: rotate(-3deg); }
-        .lang-en { background-color: var(--text-bg-en); color: #FFFFFF; transform: rotate(2deg); }
-        .lang-mn { background-color: var(--text-bg-mn); color: #FFFFFF; transform: rotate(-1deg); }
-        
-        /* Enforce internal text color for these blocks regardless of theme */
-        [data-theme="dark"] .lang-jp { color: #1A1A1A; }
-        [data-theme="dark"] .lang-en { color: #1A1A1A; }
-        [data-theme="dark"] .lang-mn { color: #1A1A1A; }
-
-        .secondary-box {
-            background-color: var(--card-bg);
-            border: 4px solid var(--border-color);
-            padding: 15px;
-            margin: 20px auto 25px;
-            box-shadow: 6px 6px 0px var(--border-color);
-            border-radius: 8px; /* blocky */
-            transform: rotate(1deg);
-            max-width: 90%;
-        }
-
-        .secondary-box p {
-            font-weight: 700;
-            font-size: 1.05rem;
-            margin: 8px 0;
-            color: var(--text-color);
-        }
-
-        p.funny {
-            font-size: 1.1rem;
-            font-weight: 900;
-            color: var(--text-color);
-            margin-bottom: 35px;
-            font-style: italic;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transform: rotate(-2deg);
-        }
-
-        /* --- Button & Interactions --- */
-        #click-me-btn {
-            background-color: var(--yellow);
-            color: var(--btn-text);
-            font-family: inherit;
-            font-size: 1.6rem;
-            font-weight: 900;
-            padding: 15px 40px;
-            border: 5px solid var(--border-color);
-            border-radius: 8px; /* Blocky Brutalism */
-            box-shadow: 8px 8px 0px var(--border-color);
-            cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);
-            transform: rotate(-2deg);
-        }
-
-        #click-me-btn:hover {
-            transform: scale(1.05) rotate(2deg);
-            background-color: var(--pink);
-            color: #FFFFFF;
-            box-shadow: 10px 10px 0px var(--border-color);
-        }
-
-        [data-theme="dark"] #click-me-btn:hover {
-            color: #1A1A1A;
-        }
-
-        /* Micro-interaction Button Squish */
-        #click-me-btn:active {
-            transform: scale(0.9, 1.1) translate(4px, 4px) rotate(0deg);
-            box-shadow: 2px 2px 0px var(--border-color);
-            background-color: var(--blue);
-        }
-
-        /* Click Glitch */
-        .glitch-active {
-            animation: click-glitch-anim 0.3s cubic-bezier(.25, .46, .45, .94) both;
-        }
-
-        @keyframes click-glitch-anim {
-            0% { transform: translate(0) skew(0deg) }
-            20% { transform: translate(-5px, 5px) skew(10deg) }
-            40% { transform: translate(-5px, -5px) skew(-10deg) }
-            60% { transform: translate(5px, 5px) skew(5deg) }
-            80% { transform: translate(5px, -5px) skew(-5deg) }
-            100% { transform: translate(0) skew(0deg) }
-        }
-
-        .confetti {
-            position: fixed;
+        /* Diagonal auth ribbon */
+        .auth-ribbon {
+            position: absolute;
+            top: 28px;
+            right: -42px;
+            background: var(--yellow);
+            color: #000;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 3px;
+            padding: 5px 48px;
+            transform: rotate(45deg);
             pointer-events: none;
-            z-index: 100;
-            top: -50px;
-            /* Brutalist shadow */
-            box-shadow: 3px 3px 0px var(--border-color);
-            border: 3px solid var(--border-color);
-            transform-origin: center center;
         }
 
-        .confetti.star {
-            background: none;
-            border: none;
-            box-shadow: none;
-            filter: drop-shadow(3px 3px 0px var(--border-color));
+        /* Vinyl disc peeking left */
+        .vinyl {
+            position: absolute;
+            left: -50px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 110px;
+            height: 110px;
+            background: #111;
+            border-radius: 50%;
+            border: 4px solid #2a2a2a;
+            box-shadow: 4px 4px 0 var(--text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: spin 6s linear infinite;
+            z-index: 2;
         }
-        
-        .confetti.star svg {
-            width: 100%;
-            height: 100%;
+
+        .vinyl::after {
+            content: "";
+            width: 32px;
+            height: 32px;
+            background: var(--text);
+            border-radius: 50%;
+            border: 6px solid #111;
+        }
+
+        [data-theme="light"] .vinyl {
+            background: #222;
+            border-color: #555;
+        }
+
+        [data-theme="light"] .vinyl::after {
+            background: var(--text);
+            border-color: #222;
+        }
+
+        /* ─── CONTENT ─── */
+        .content {
+            position: relative;
+            z-index: 5;
+        }
+
+        /* Title */
+        .hero-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(3.5rem, 14vw, 6rem);
+            line-height: 0.85;
+            letter-spacing: 2px;
+            position: relative;
+            display: inline-block;
+            margin-bottom: 6px;
+        }
+
+        .hero-title .line1 {
             display: block;
         }
 
-        @keyframes confettiFall {
-            0% { transform: translate3d(0, 0, 0) rotateX(0deg) rotateY(0deg) rotateZ(0deg); opacity: 1; }
-            80% { opacity: 1; }
-            100% { transform: translate3d(var(--end-x), 110vh, 0) rotateX(var(--rot-x)) rotateY(var(--rot-y)) rotateZ(var(--rot-z)); opacity: 0; }
+        .hero-title .line2 {
+            display: block;
+            -webkit-text-stroke: 2px var(--text);
+            color: transparent;
+            position: relative;
         }
 
-        @media (max-width: 600px) {
-            .title-text { font-size: 1.8rem; }
-            .secondary-box p { font-size: 0.95rem; }
-            #click-me-btn { font-size: 1.3rem; padding: 12px 25px; }
-            .card { padding: 50px 20px 30px; margin-top: 50px; border-radius: 8px;}
+        /* Glitch on hover */
+        .hero-title:hover .line2 {
+            animation: glitch-skew 0.3s steps(2) infinite;
+        }
+
+        @keyframes glitch-skew {
+            0% {
+                transform: skewX(0deg);
+            }
+
+            33% {
+                transform: skewX(-5deg);
+                text-shadow: -4px 0 var(--red);
+            }
+
+            66% {
+                transform: skewX(4deg);
+                text-shadow: 4px 0 var(--yellow);
+            }
+
+            100% {
+                transform: skewX(0deg);
+            }
+        }
+
+        .badge-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            font-size: 0.65rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            padding: 4px 12px;
+            border: 2px solid var(--text);
+            white-space: nowrap;
+        }
+
+        .badge.filled {
+            background: var(--text);
+            color: var(--bg);
+        }
+
+        .badge.accent {
+            background: var(--red);
+            color: #fff;
+            border-color: var(--red);
+        }
+
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 20px 0;
+            opacity: 0.3;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: var(--text);
+        }
+
+        .divider-icon {
+            font-size: 1rem;
+        }
+
+        /* Message */
+        .message {
+            font-family: 'Permanent Marker', cursive;
+            font-size: clamp(1rem, 4vw, 1.35rem);
+            line-height: 1.65;
+            margin-bottom: 6px;
+            transform: rotate(-1.5deg);
+            opacity: 0.9;
+        }
+
+        .lyric-line {
+            font-family: 'Space Mono', monospace;
+            font-style: italic;
+            font-size: 0.75rem;
+            opacity: 0.5;
+            margin-bottom: 28px;
+            letter-spacing: 1px;
+        }
+
+        /* ─── VISUALIZER ─── */
+        .visualizer {
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 3px;
+            height: 36px;
+            margin: 16px 0 28px;
+        }
+
+        .bar {
+            width: 5px;
+            background: var(--text);
+            border-radius: 1px 1px 0 0;
+            animation: bar-pulse 0.4s ease-in-out infinite alternate;
+        }
+
+        @keyframes bar-pulse {
+            from {
+                height: 4px;
+            }
+
+            to {
+                height: 32px;
+            }
+        }
+
+        /* ─── BUTTON ─── */
+        .cta-btn {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 1.6rem;
+            letter-spacing: 4px;
+            background: var(--text);
+            color: var(--bg);
+            border: none;
+            padding: 16px 40px;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 6px 6px 0 var(--red);
+            transition: transform 0.12s, box-shadow 0.12s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-btn::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: var(--red);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 0;
+        }
+
+        .cta-btn:hover::before {
+            transform: scaleX(1);
+        }
+
+        .cta-btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-btn:hover span {
+            color: #fff;
+        }
+
+        .cta-btn:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 9px 9px 0 var(--red);
+        }
+
+        .cta-btn:active {
+            transform: translate(3px, 3px);
+            box-shadow: 0 0 0 var(--red);
+        }
+
+        /* ─── SETLIST (second screen) ─── */
+        .setlist {
+            border-left: 3px dashed var(--dim);
+            padding-left: 18px;
+            margin: 20px 0;
+        }
+
+        .setlist-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.75rem;
+            padding: 6px 0;
+            letter-spacing: 1px;
+            opacity: 0;
+            transform: translateX(-12px);
+            transition: opacity 0.4s, transform 0.4s;
+        }
+
+        .setlist-row.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .setlist-row .label {
+            opacity: 0.5;
+        }
+
+        .setlist-row .value {
+            color: var(--yellow);
+            font-weight: 700;
+        }
+
+        /* ─── FINAL MESSAGE ─── */
+        .final-msg {
+            font-family: 'Permanent Marker', cursive;
+            font-size: clamp(1.1rem, 4.5vw, 1.5rem);
+            line-height: 1.7;
+            text-align: center;
+            margin: 20px 0;
+            animation: fadeSlide 0.6s ease both;
+        }
+
+        @keyframes fadeSlide {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ─── CONFETTI ─── */
+        .confetti-piece {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9990;
+            top: -20px;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(110vh) rotate(720deg);
+            }
+        }
+
+        /* ─── TRACKER ─── */
+        #tracker {
+            position: absolute;
+            width: 52px;
+            height: 52px;
+            border: 2px solid var(--text);
+            pointer-events: none;
+            z-index: 30;
+            transition: transform 0.08s linear;
+            opacity: 0.6;
+        }
+
+        #tracker::before,
+        #tracker::after {
+            content: "";
+            position: absolute;
+            background: var(--red);
+        }
+
+        #tracker::before {
+            width: 1px;
+            height: 100%;
+            left: 50%;
+            top: 0;
+        }
+
+        #tracker::after {
+            width: 100%;
+            height: 1px;
+            top: 50%;
+            left: 0;
+        }
+
+        .tracker-label {
+            position: absolute;
+            top: -18px;
+            left: 0;
+            font-size: 0.45rem;
+            letter-spacing: 1px;
+            color: var(--red);
+            white-space: nowrap;
+        }
+
+        /* ─── DATA STREAMS ─── */
+        .stream {
+            position: fixed;
+            top: 0;
+            width: 60px;
+            height: 100%;
+            font-size: 0.5rem;
+            color: var(--text);
+            opacity: 0.07;
+            overflow: hidden;
+            pointer-events: none;
+            z-index: 5;
+            line-height: 1.1;
+            word-break: break-all;
+        }
+
+        .stream.left {
+            left: 0;
+        }
+
+        .stream.right {
+            right: 0;
+        }
+
+        /* ─── NOISE FLASH ─── */
+        #noise {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9998;
+            opacity: 0;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        }
+
+        .noise-flash {
+            animation: noiseAnim 0.3s steps(2) both;
+        }
+
+        @keyframes noiseAnim {
+            0% {
+                opacity: 0;
+            }
+
+            25% {
+                opacity: 0.25;
+            }
+
+            50% {
+                opacity: 0;
+            }
+
+            75% {
+                opacity: 0.15;
+            }
+
+            100% {
+                opacity: 0;
+            }
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media(max-width: 520px) {
+
+            .stream,
+            .vinyl {
+                display: none;
+            }
+
+            .card {
+                padding: 36px 20px 28px;
+            }
+
+            .hud-bottom .left-info {
+                display: none;
+            }
+        }
+
+        @media(max-width: 380px) {
+            .card {
+                border: none;
+                box-shadow: none;
+            }
         }
     </style>
 </head>
+
 <body>
 
-    <button id="theme-toggle">🌙 Dark Mode</button>
+    <button id="theme-btn">◐ MODE</button>
 
-    <div id="bg-elements"></div>
+    <div id="particles"></div>
+    <div id="noise"></div>
+    <div class="stream left" id="sl"></div>
+    <div class="stream right" id="sr"></div>
 
-    <div class="card">
-        <div class="cat-wrapper">
-            <div class="cat-tail"></div>
-            <div class="cat-ear left-ear"></div>
-            <div class="cat-ear right-ear"></div>
-            <div class="cat-head">
-                <div class="cat-eyes">
-                    <div class="cat-eye left-eye"><div class="pupil"></div></div>
-                    <div class="cat-eye right-eye"><div class="pupil"></div></div>
-                </div>
-                <div class="cat-nose"></div>
-                <div class="cat-mouth"></div>
-                <div class="cat-whiskers left-whiskers">
-                    <div class="whisker"></div>
-                    <div class="whisker"></div>
-                </div>
-                <div class="cat-whiskers right-whiskers">
-                    <div class="whisker"></div>
-                    <div class="whisker"></div>
-                </div>
+    <!-- HUD -->
+    <div class="hud">
+        <div class="hud-top">
+            <div class="rec-badge">
+                <div class="rec-dot"></div>
+                <span>REC</span>
+            </div>
+            <div class="hud-clock" id="hud-clock">
+                CAM 01 // B-DAY SUITE<br>
+                <span id="clock-time">--:--:--</span>
+            </div>
+        </div>
+        <div class="hud-bottom">
+            <div class="left-info" id="sys-log">
+                > SIGNAL LOCKED<br>
+                > BIRTHDAY PROTOCOL: ACTIVE
+            </div>
+            <div>SIGNAL: ██████ STABLE</div>
+        </div>
+    </div>
+
+    <!-- MAIN STAGE -->
+    <div class="stage" id="stage">
+        <!-- Cassette hanging above card -->
+        <div class="cassette">
+            <div class="cassette-label">
+                <span class="cassette-label-text">SIDE A: ALT ROCK VIBES</span>
+                <span style="font-family:'Space Mono';font-size:0.55rem;letter-spacing:1px;">90min</span>
+            </div>
+            <div class="reel-row">
+                <div class="reel"></div>
+                <div class="tape-slot"></div>
+                <div class="reel"></div>
             </div>
         </div>
 
-        <div class="content" id="greeting-content">
-            <h1 class="bounce-target title-text">
-                <span class="lang-jp glitch-hover">「こんにちは！」</span>
-                <span class="lang-en glitch-hover">Konnichiwa!</span>
-                <span class="lang-mn glitch-hover">Сайн байна уу!</span>
-            </h1>
-            
-            <div class="secondary-box bounce-target">
-                <p>「今日は素敵な一日になりますように」</p>
-                <p>Kyou wa suteki na ichinichi ni narimasu you ni</p>
-                <p>Өнөөдөр гайхалтай өдөр байг!</p>
+        <!-- The Card -->
+        <div class="card" id="card">
+            <div class="bracket tl"></div>
+            <div class="bracket tr"></div>
+            <div class="bracket bl"></div>
+            <div class="bracket br"></div>
+            <div class="auth-ribbon">AUTH: GRANTED</div>
+            <div class="vinyl"></div>
+            <div id="tracker">
+                <div class="tracker-label">TARGET: LOCKED</div>
             </div>
 
-            <p class="funny">I hope your day is purr-fect!</p>
-            
-            <button id="click-me-btn">🐾 Click me!</button>
+            <div class="content" id="content">
+                <!-- SCREEN 1 -->
+                <div id="screen1">
+                    <h1 class="hero-title">
+                        <span class="line1">STAY</span>
+                        <span class="line2">ROCK!</span>
+                    </h1>
+
+                    <div class="badge-row">
+                        <div class="badge filled">🤘 ROCK STAR</div>
+                        <div class="badge accent">B-DAY</div>
+                        <div class="badge">LEVEL UP</div>
+                    </div>
+
+                    <div class="divider"><span class="divider-icon">♪</span></div>
+
+                    <p class="message">
+                        Өнөөдөр чиний өдөр!<br>
+                        Хамгийн дуртай дуугаа<br>
+                        чанга дээр нь тавиад...
+                    </p>
+
+                    <p class="lyric-line">"Tonight we are young..." — fun.</p>
+
+                    <div class="visualizer" id="viz1">
+                        <!-- bars injected by JS -->
+                    </div>
+
+                    <button class="cta-btn" id="main-btn">
+                        <span>TURN IT UP 🤘</span>
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const btn = document.getElementById('click-me-btn');
-            const bounceTargets = document.querySelectorAll('.bounce-target');
-            const themeToggle = document.getElementById('theme-toggle');
-            
-            // Toggle Theme
-            themeToggle.addEventListener('click', () => {
-                const currentTheme = document.body.getAttribute('data-theme');
-                if (currentTheme === 'dark') {
-                    document.body.removeAttribute('data-theme');
-                    themeToggle.innerText = '🌙 Dark Mode';
-                } else {
-                    document.body.setAttribute('data-theme', 'dark');
-                    themeToggle.innerText = '☀️ Light Mode';
-                }
+
+            /* ── THEME ── */
+            const themeBtn = document.getElementById('theme-btn');
+            let isDark = true;
+            themeBtn.addEventListener('click', () => {
+                isDark = !isDark;
+                document.body.toggleAttribute('data-theme', !isDark);
+                themeBtn.textContent = isDark ? '◐ MODE' : '◑ MODE';
             });
 
-            // Cat Eyes Follow Cursor
-            const eyes = document.querySelectorAll('.cat-eye');
-            document.addEventListener('mousemove', (e) => {
-                const mouseX = e.clientX;
-                const mouseY = e.clientY;
-                
-                eyes.forEach(eye => {
-                    const rect = eye.getBoundingClientRect();
-                    const eyeCenterX = rect.left + rect.width / 2;
-                    const eyeCenterY = rect.top + rect.height / 2;
-                    
-                    const angle = Math.atan2(mouseY - eyeCenterY, mouseX - eyeCenterX);
-                    // Calculate pupil distance with bounds
-                    const distance = Math.min(4, Math.hypot(mouseX - eyeCenterX, mouseY - eyeCenterY) / 10);
-                    
-                    const pupil = eye.querySelector('.pupil');
-                    const dx = Math.cos(angle) * distance;
-                    const dy = Math.sin(angle) * distance;
-                    
-                    pupil.style.transform = `translate(calc(-50% + ${dx}px), calc(-50% + ${dy}px))`;
-                });
-            });
+            /* ── CLOCK ── */
+            const clockEl = document.getElementById('clock-time');
+            setInterval(() => {
+                const n = new Date();
+                clockEl.textContent = n.toLocaleTimeString('en-GB', { hour12: false }) +
+                    ' // ' + n.toLocaleDateString('en-GB').replace(/\//g, '-');
+            }, 1000);
 
-            // Generate floating background paws and geometric abstract shapes
-            const bgContainer = document.getElementById('bg-elements');
-            
-            function createFloatingElement() {
-                const isShape = Math.random() > 0.6;
-                const el = document.createElement(isShape ? 'svg' : 'div');
-                
-                if (isShape) {
-                    el.classList.add('floating-shape');
-                    el.setAttribute('viewBox', '0 0 50 50');
-                    el.setAttribute('width', (Math.random() * 40 + 20) + 'px');
-                    el.setAttribute('height', el.getAttribute('width'));
-                    
-                    // Create basic abstract geometries
-                    const type = Math.floor(Math.random() * 3);
-                    const path = document.createElementNS('http://www.w3.org/2000/svg', type === 0 ? 'circle' : type === 1 ? 'rect' : 'polygon');
-                    if (type === 0) {
-                        path.setAttribute('cx', '25'); path.setAttribute('cy', '25'); path.setAttribute('r', '20');
-                    } else if (type === 1) {
-                        path.setAttribute('x', '5'); path.setAttribute('y', '5'); path.setAttribute('width', '40'); path.setAttribute('height', '40');
-                    } else {
-                        path.setAttribute('points', '25,5 45,45 5,45');
-                    }
-                    el.appendChild(path);
-                } else {
-                    el.classList.add('floating-paw');
-                    el.innerText = ['🐾', '🦴', '✨', '⚡️'][Math.floor(Math.random() * 4)];
-                    el.style.fontSize = (Math.random() * 1.5 + 1.2) + 'rem';
-                }
-                
-                el.style.left = Math.random() * 100 + 'vw';
-                el.style.animationDuration = (Math.random() * 15 + 10) + 's';
-                el.style.animationDelay = (Math.random() * 5) + 's';
-                bgContainer.appendChild(el);
+            /* ── DATA STREAMS ── */
+            const sl = document.getElementById('sl'), sr = document.getElementById('sr');
+            function hexLine() {
+                return Math.random().toString(16).substring(2, 10).toUpperCase();
+            }
+            function updateStreams() {
+                let s = '';
+                for (let i = 0; i < 120; i++) s += hexLine() + '\n';
+                sl.textContent = sr.textContent = s;
+            }
+            setInterval(updateStreams, 160);
+            updateStreams();
+
+            /* ── PARTICLES ── */
+            const pContainer = document.getElementById('particles');
+            const words = ['🤘', '♪', '★', '⚡', '✦', '▲', '◆', '○'];
+            for (let i = 0; i < 30; i++) {
+                const el = document.createElement('span');
+                el.className = 'particle';
+                el.textContent = words[Math.floor(Math.random() * words.length)];
+                el.style.cssText = `
+            left:${Math.random() * 100}vw;
+            font-size:${Math.random() * 24 + 14}px;
+            animation-duration:${Math.random() * 20 + 12}s;
+            animation-delay:${Math.random() * 15}s;
+        `;
+                pContainer.appendChild(el);
             }
 
-            for (let i = 0; i < 20; i++) {
-                createFloatingElement();
-            }
-
-            // High-quality public cat meow
-            const playMeow = () => {
-                const audio = new Audio('https://actions.google.com/sounds/v1/animals/cat_meow.ogg');
-                audio.volume = 0.5;
-                audio.play().catch(e => console.log('Audio autoplay prevented. Interaction needed.'));
-            };
-
-            btn.addEventListener('click', () => {
-                playMeow();
-                
-                const greetingContent = document.getElementById('greeting-content');
-                greetingContent.style.transition = 'opacity 0.3s ease';
-                greetingContent.style.opacity = 0;
-                
-                setTimeout(() => {
-                    greetingContent.innerHTML = `
-                        <h1 class="bounce-target title-text">
-                            <span class="lang-en glitch-hover" style="transform: rotate(1deg); font-size: 0.9em; padding: 10px 20px;">🎉 ТӨРСӨН ӨДРИЙН МЭНД! 🎉</span>
-                        </h1>
-                        
-                        <div class="secondary-box bounce-target" style="padding: 25px; transform: rotate(-1deg);">
-                            <p style="font-size: 1.25rem;">Чамд эрүүл энх, аз жаргал,</p>
-                            <p style="font-size: 1.25rem;">хамгийн сайн сайхан бүхнийг</p>
-                            <p style="font-size: 1.25rem;">хүсэн ерөөе! 🎂✨</p>
-                        </div>
-
-                        <p class="funny">Wishing you a purr-fect birthday! 🐾</p>
-                    `;
-                    greetingContent.style.opacity = 1;
-                    
-                    const newBounceTargets = document.querySelectorAll('.bounce-target');
-                    newBounceTargets.forEach(el => {
-                        el.classList.remove('glitch-active');
-                        void el.offsetWidth;
-                        el.classList.add('glitch-active');
-                        setTimeout(() => el.classList.remove('glitch-active'), 350); 
-                    });
-                }, 300);
-
-                createBirthdayRain();
-            });
-
-            function createBirthdayRain() {
-                const colors = ['var(--pink)', 'var(--blue)', 'var(--yellow)', '#4CC9F0', '#00F5D4', '#F15BB5'];
-                const shapes = ['circle', 'square', 'pill', 'star'];
-                const count = Math.floor(Math.random() * 50) + 70; 
-
+            /* ── VISUALIZER BARS ── */
+            function buildViz(containerId, count = 12) {
+                const v = document.getElementById(containerId);
+                if (!v) return;
+                v.innerHTML = '';
                 for (let i = 0; i < count; i++) {
-                    setTimeout(() => {
-                        const el = document.createElement('div');
-                        el.className = 'confetti';
-                        
-                        const shape = shapes[Math.floor(Math.random() * shapes.length)];
-                        const color = colors[Math.floor(Math.random() * colors.length)];
-                        const size = Math.random() * 15 + 15; 
-                        
-                        if (shape === 'star') {
-                            el.classList.add('star');
-                            el.style.width = size + 15 + 'px';
-                            el.style.height = size + 15 + 'px';
-                            el.innerHTML = `<svg viewBox="0 0 24 24" style="fill: ${color}; stroke: var(--border-color); stroke-width: 2px;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>`;
-                        } else {
-                            el.style.width = size + 'px';
-                            el.style.height = (shape === 'pill' ? size * 1.8 : size) + 'px';
-                            el.style.backgroundColor = color;
-                            if (shape === 'circle') el.style.borderRadius = '50%';
-                            if (shape === 'pill') el.style.borderRadius = '50px';
-                        }
-                        
-                        el.style.left = Math.random() * 100 + 'vw';
-                        
-                        const endX = (Math.random() - 0.5) * 300; 
-                        const rotX = Math.random() * 1080;
-                        const rotY = Math.random() * 1080;
-                        const rotZ = Math.random() * 1080;
-                        
-                        el.style.setProperty('--end-x', `${endX}px`);
-                        el.style.setProperty('--rot-x', `${rotX}deg`);
-                        el.style.setProperty('--rot-y', `${rotY}deg`);
-                        el.style.setProperty('--rot-z', `${rotZ}deg`);
-                        
-                        const duration = Math.random() * 2 + 2; 
-                        el.style.animation = `confettiFall ${duration}s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards`;
-                        
-                        document.body.appendChild(el);
-                        
-                        setTimeout(() => {
-                            el.remove();
-                        }, duration * 1000);
-                    }, i * 25); 
+                    const b = document.createElement('div');
+                    b.className = 'bar';
+                    b.style.animationDelay = (Math.random() * 0.6) + 's';
+                    b.style.animationDuration = (Math.random() * 0.25 + 0.25) + 's';
+                    v.appendChild(b);
                 }
             }
+            buildViz('viz1');
+
+            /* ── MOUSE TRACKER ── */
+            const card = document.getElementById('card');
+            const trker = document.getElementById('tracker');
+            card.addEventListener('mousemove', e => {
+                const r = card.getBoundingClientRect();
+                trker.style.transform =
+                    `translate(${e.clientX - r.left - 26}px, ${e.clientY - r.top - 26}px)`;
+            });
+
+            /* ── SYSTEM LOG ── */
+            const log = document.getElementById('sys-log');
+            const logs = [
+                '> ANALYZING SUBJECT VIBES...',
+                '> SCANNING FOR CAKE...',
+                '> JOY LEVELS: MAXIMUM',
+                '> BYPASSING FIREWALLS...',
+                '> BIRTHDAY PROTOCOL: LIVE',
+                '> ENCRYPTED WISHES SENT',
+                '> VIBES: IMMACULATE',
+            ];
+            setInterval(() => {
+                const msg = logs[Math.floor(Math.random() * logs.length)];
+                const lines = log.innerHTML.split('<br>').slice(-2);
+                lines.push(msg);
+                log.innerHTML = lines.join('<br>');
+                maybeNoise();
+            }, 2800);
+
+            /* ── NOISE FLASH ── */
+            const noise = document.getElementById('noise');
+            function maybeNoise() {
+                if (Math.random() > 0.6) {
+                    noise.classList.add('noise-flash');
+                    setTimeout(() => noise.classList.remove('noise-flash'), 350);
+                }
+            }
+
+            /* ── CONFETTI ── */
+            function confetti() {
+                const shapes = ['■', '▲', '●', '★', '♪'];
+                for (let i = 0; i < 120; i++) {
+                    const el = document.createElement('span');
+                    el.className = 'confetti-piece';
+                    const size = Math.random() * 12 + 6;
+                    el.style.cssText = `
+                left:${Math.random() * 100}vw;
+                font-size:${size}px;
+                color:${['#f5c842', '#e63329', '#f0ede6', '#ffffff', '#999'][Math.floor(Math.random() * 5)]};
+                animation-duration:${Math.random() * 2 + 1.2}s;
+                animation-delay:${Math.random() * 0.8}s;
+            `;
+                    el.textContent = shapes[Math.floor(Math.random() * shapes.length)];
+                    document.body.appendChild(el);
+                    setTimeout(() => el.remove(), 4000);
+                }
+            }
+
+            /* ── BUTTON → SECOND SCREEN ── */
+            document.getElementById('main-btn').addEventListener('click', () => {
+                const content = document.getElementById('content');
+
+                // Glitch flash
+                noise.classList.add('noise-flash');
+                setTimeout(() => noise.classList.remove('noise-flash'), 350);
+
+                content.style.transition = 'opacity 0.2s';
+                content.style.opacity = '0';
+
+                setTimeout(() => {
+                    content.innerHTML = `
+                <div id="screen2">
+                    <h1 class="hero-title" style="font-size:clamp(2.5rem,10vw,4.5rem); margin-bottom:12px;">
+                        <span class="line1">TARGET</span>
+                        <span class="line2">FOUND.</span>
+                    </h1>
+
+                    <div class="badge-row">
+                        <div class="badge filled">SUBJECT: BEST FRIEND</div>
+                        <div class="badge accent">ENERGY: MAX</div>
+                    </div>
+
+                    <div class="setlist">
+                        <div class="setlist-row" data-delay="0">
+                            <span>MEMORIES LOADED</span>
+                            <span class="value">∞</span>
+                        </div>
+                        <div class="setlist-row" data-delay="150">
+                            <span>JOY CALCULATED</span>
+                            <span class="value">MAX</span>
+                        </div>
+                        <div class="setlist-row" data-delay="300">
+                            <span>WISHES ENCRYPTED</span>
+                            <span class="value">✓ SENT</span>
+                        </div>
+                        <div class="setlist-row" data-delay="450">
+                            <span>BIRTHDAY PROTOCOL</span>
+                            <span class="value">LIVE</span>
+                        </div>
+                    </div>
+
+                    <div class="divider"><span class="divider-icon">🤘</span></div>
+
+                    <p class="final-msg">
+                        ТӨРСӨН ӨДРИЙН МЭНД!<br>
+                        Үргэлж өөрийнхөөрөө<br>
+                        гялалзаарай. 🖤
+                    </p>
+
+                    <div class="visualizer" id="viz2"></div>
+                </div>
+            `;
+                    content.style.opacity = '1';
+
+                    buildViz('viz2', 18);
+
+                    // Animate setlist rows
+                    document.querySelectorAll('.setlist-row').forEach(row => {
+                        setTimeout(() => row.classList.add('active'),
+                            parseInt(row.dataset.delay || 0));
+                    });
+
+                    confetti();
+                }, 250);
+            });
+
         });
     </script>
 </body>
+
 </html>
