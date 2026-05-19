@@ -1,23 +1,24 @@
 <!DOCTYPE html>
 <html lang="mn">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Төрсөн өдрийн мэнд хүргэе</title>
+
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Pacifico&display=swap" rel="stylesheet">
+
   <style>
     :root {
       --bg: #fff1f7;
-      --surface: #ffffff;
-      --surface2: #ffe0ef;
-      --text: #4a2436;
+      --surface: #fff;
+      --surface2: #ffe1ef;
+      --text: #432033;
       --pink: #ff69a6;
       --hot: #ff2f86;
       --soft: #ffc6dc;
       --cream: #fff8dd;
       --mint: #b9f7df;
-      --grid: rgba(255, 105, 166, 0.12);
+      --grid: rgba(255, 105, 166, .12);
     }
 
     * {
@@ -29,18 +30,29 @@
     body {
       min-height: 100vh;
       overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Baloo 2', cursive;
+      display: grid;
+      place-items: center;
+      font-family: "Baloo 2", cursive;
       color: var(--text);
       background:
+        radial-gradient(circle at 50% 42%, rgba(255,255,255,.65), transparent 26%),
+        radial-gradient(circle at 20% 18%, rgba(255,198,220,.78), transparent 34%),
+        radial-gradient(circle at 80% 90%, rgba(185,247,223,.5), transparent 30%),
         linear-gradient(var(--grid) 1px, transparent 1px),
         linear-gradient(90deg, var(--grid) 1px, transparent 1px),
-        radial-gradient(circle at 20% 18%, rgba(255, 198, 220, 0.75), transparent 34%),
-        radial-gradient(circle at 80% 90%, rgba(185, 247, 223, 0.45), transparent 30%),
         var(--bg);
-      background-size: 42px 42px, 42px 42px, auto, auto, auto;
+      background-size: auto, auto, auto, 42px 42px, 42px 42px, auto;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: -20%;
+      background:
+        conic-gradient(from 180deg, transparent, rgba(255,105,166,.16), transparent, rgba(255,255,255,.4), transparent);
+      animation: aura 12s linear infinite;
+      pointer-events: none;
+      z-index: 0;
     }
 
     body::after {
@@ -48,10 +60,14 @@
       position: fixed;
       inset: 0;
       pointer-events: none;
-      background-image: radial-gradient(circle, rgba(255,255,255,0.45) 1px, transparent 1px);
+      background-image: radial-gradient(circle, rgba(255,255,255,.55) 1px, transparent 1px);
       background-size: 18px 18px;
-      opacity: 0.4;
+      opacity: .38;
       z-index: 5;
+    }
+
+    @keyframes aura {
+      to { transform: rotate(360deg); }
     }
 
     #particles {
@@ -59,40 +75,61 @@
       inset: 0;
       pointer-events: none;
       overflow: hidden;
-      z-index: 0;
+      z-index: 1;
     }
 
     .particle {
       position: absolute;
-      opacity: 0.42;
-      animation: drift linear infinite;
+      opacity: .48;
       user-select: none;
-      filter: drop-shadow(0 4px 6px rgba(255, 47, 134, 0.18));
+      filter: drop-shadow(0 5px 7px rgba(255,47,134,.18));
+      animation: drift linear infinite;
     }
 
     @keyframes drift {
-      from { transform: translateY(110vh) rotate(0deg) scale(0.9); }
-      to { transform: translateY(-20vh) rotate(360deg) scale(1.08); }
+      from {
+        transform: translate3d(0, 115vh, 0) rotate(0deg) scale(.85);
+      }
+      to {
+        transform: translate3d(0, -22vh, 0) rotate(360deg) scale(1.12);
+      }
     }
 
     .stage {
       position: relative;
       z-index: 10;
-      width: min(520px, 94vw);
-      margin-top: 60px;
+      width: min(540px, 92vw);
+      margin-top: 70px;
+      animation: entrance .9s cubic-bezier(.2, 1.3, .3, 1) both;
+    }
+
+    @keyframes entrance {
+      from {
+        opacity: 0;
+        transform: translateY(34px) scale(.94);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
     }
 
     .cat-head {
       position: absolute;
-      top: -118px;
+      top: -122px;
       left: 50%;
+      width: 214px;
+      height: 148px;
       transform: translateX(-50%) rotate(-3deg);
-      width: 210px;
-      height: 145px;
-      background: var(--surface);
+      background:
+        radial-gradient(circle at 35% 38%, rgba(255,198,220,.35), transparent 18%),
+        radial-gradient(circle at 65% 38%, rgba(255,198,220,.35), transparent 18%),
+        var(--surface);
       border: 4px solid var(--text);
-      border-radius: 46% 46% 40% 40%;
-      box-shadow: 8px 8px 0 var(--pink);
+      border-radius: 48% 48% 42% 42%;
+      box-shadow:
+        8px 8px 0 var(--pink),
+        0 18px 30px rgba(255,47,134,.2);
       animation: sway 4.5s ease-in-out infinite;
       z-index: 20;
     }
@@ -101,13 +138,15 @@
     .cat-head::after {
       content: "";
       position: absolute;
-      top: -34px;
-      width: 72px;
-      height: 72px;
-      background: var(--surface);
+      top: -35px;
+      width: 74px;
+      height: 74px;
+      background:
+        radial-gradient(circle at 50% 55%, var(--soft) 0 28%, transparent 30%),
+        var(--surface);
       border: 4px solid var(--text);
       transform: rotate(45deg);
-      border-radius: 12px;
+      border-radius: 14px;
       z-index: -1;
     }
 
@@ -124,11 +163,17 @@
     }
 
     .cat-eyes {
-      width: 116px;
+      width: 118px;
       display: flex;
       justify-content: space-between;
-      font-size: 2rem;
+      font-size: 2.1rem;
       line-height: 1;
+      animation: blink 5s infinite;
+    }
+
+    @keyframes blink {
+      0%, 92%, 100% { transform: scaleY(1); }
+      95% { transform: scaleY(.08); }
     }
 
     .cat-nose {
@@ -138,6 +183,7 @@
       border-radius: 50% 50% 60% 60%;
       transform: rotate(45deg);
       margin-top: -2px;
+      box-shadow: 0 0 12px rgba(255,47,134,.35);
     }
 
     .cat-mouth {
@@ -153,54 +199,79 @@
     .card {
       position: relative;
       overflow: hidden;
-      min-height: 360px;
+      min-height: 380px;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 56px 34px 42px;
-      background: linear-gradient(180deg, var(--surface), var(--surface2));
+      padding: 58px 34px 44px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.85), rgba(255,255,255,.25)),
+        linear-gradient(180deg, var(--surface), var(--surface2));
       border: 4px solid var(--text);
-      border-radius: 34px;
-      box-shadow: 12px 12px 0 var(--pink);
+      border-radius: 36px;
+      box-shadow:
+        12px 12px 0 var(--pink),
+        0 28px 60px rgba(255,47,134,.22);
     }
 
     .card::before {
       content: "";
       position: absolute;
       inset: 14px;
-      border: 2px dashed rgba(255, 105, 166, 0.55);
-      border-radius: 24px;
+      border: 2px dashed rgba(255,105,166,.55);
+      border-radius: 26px;
       pointer-events: none;
+      z-index: 3;
+    }
+
+    .card::after {
+      content: "";
+      position: absolute;
+      width: 170px;
+      height: 170px;
+      right: -70px;
+      top: -70px;
+      background: radial-gradient(circle, rgba(255,255,255,.9), transparent 68%);
+      opacity: .75;
+      z-index: 1;
     }
 
     .paw {
       position: absolute;
       color: var(--pink);
-      opacity: 0.85;
-      font-size: 1.25rem;
-      z-index: 3;
+      opacity: .9;
+      font-size: 1.35rem;
+      z-index: 4;
+      animation: pawPulse 2.4s ease-in-out infinite;
     }
 
-    .paw.tl { top: 16px; left: 18px; transform: rotate(-18deg); }
-    .paw.tr { top: 16px; right: 18px; transform: rotate(18deg); }
-    .paw.bl { bottom: 16px; left: 18px; transform: rotate(12deg); }
-    .paw.br { bottom: 16px; right: 18px; transform: rotate(-12deg); }
+    .paw.tl { top: 18px; left: 20px; transform: rotate(-18deg); }
+    .paw.tr { top: 18px; right: 20px; transform: rotate(18deg); animation-delay: .3s; }
+    .paw.bl { bottom: 18px; left: 20px; transform: rotate(12deg); animation-delay: .6s; }
+    .paw.br { bottom: 18px; right: 20px; transform: rotate(-12deg); animation-delay: .9s; }
+
+    @keyframes pawPulse {
+      50% { opacity: .55; scale: .92; }
+    }
 
     .yarn {
       position: absolute;
-      left: -45px;
-      top: 53%;
-      transform: translateY(-50%);
-      width: 110px;
-      height: 110px;
-      background: var(--pink);
+      left: -48px;
+      top: 54%;
+      width: 112px;
+      height: 112px;
+      background:
+        radial-gradient(circle at 35% 30%, rgba(255,255,255,.5), transparent 22%),
+        var(--pink);
       border-radius: 50%;
       border: 4px solid var(--text);
-      box-shadow: 6px 6px 0 var(--text);
+      box-shadow:
+        6px 6px 0 var(--text),
+        0 18px 28px rgba(255,47,134,.18);
       animation: spin 8s linear infinite;
       z-index: 2;
-      opacity: 0.92;
+      opacity: .94;
     }
 
     .yarn::before,
@@ -209,14 +280,23 @@
       position: absolute;
       left: 12px;
       top: 28px;
-      border: 3px solid rgba(255,255,255,0.8);
+      border: 3px solid rgba(255,255,255,.82);
       border-left: none;
       border-right: none;
       border-radius: 50%;
     }
 
-    .yarn::before { width: 78px; height: 42px; transform: rotate(26deg); }
-    .yarn::after { width: 82px; height: 50px; transform: rotate(-34deg); }
+    .yarn::before {
+      width: 78px;
+      height: 42px;
+      transform: rotate(26deg);
+    }
+
+    .yarn::after {
+      width: 82px;
+      height: 50px;
+      transform: rotate(-34deg);
+    }
 
     @keyframes spin {
       from { transform: translateY(-50%) rotate(0deg); }
@@ -226,41 +306,81 @@
     .hero-title {
       position: relative;
       z-index: 10;
-      font-size: clamp(3rem, 12vw, 5.3rem);
-      line-height: 1.05;
+      font-size: clamp(3rem, 12vw, 5.45rem);
+      line-height: 1.03;
       color: var(--hot);
-      text-shadow: 4px 4px 0 var(--cream), 7px 7px 0 var(--text);
-      animation: pop 1.6s ease-in-out infinite alternate;
+      text-shadow:
+        4px 4px 0 var(--cream),
+        7px 7px 0 var(--text),
+        0 18px 28px rgba(255,47,134,.16);
+      animation: pop 1.8s ease-in-out infinite alternate;
     }
 
     .hero-title .line1 {
       display: block;
-      font-family: 'Pacifico', cursive;
+      font-family: "Pacifico", cursive;
       font-weight: 400;
     }
 
     .hero-title .line2 {
       display: block;
-      margin-top: -4px;
+      margin-top: -2px;
       font-weight: 800;
       letter-spacing: 2px;
       color: var(--text);
       text-transform: uppercase;
-      text-shadow: 3px 3px 0 var(--soft);
+      text-shadow:
+        3px 3px 0 var(--soft),
+        0 10px 18px rgba(67,32,51,.14);
     }
 
     @keyframes pop {
       from { transform: scale(1) rotate(-1deg); }
-      to { transform: scale(1.03) rotate(1deg); }
+      to { transform: scale(1.035) rotate(1deg); }
     }
 
-    @media(max-width: 520px) {
-      .yarn { display: none; }
-      .card { min-height: 330px; padding: 44px 22px 34px; border-radius: 28px; }
-      .cat-head { width: 178px; height: 124px; top: -102px; }
+    @media (max-width: 520px) {
+      .stage {
+        width: 92vw;
+        margin-top: 58px;
+      }
+
+      .card {
+        min-height: 340px;
+        padding: 46px 22px 36px;
+        border-radius: 30px;
+        box-shadow: 8px 8px 0 var(--pink);
+      }
+
+      .yarn {
+        display: none;
+      }
+
+      .cat-head {
+        width: 180px;
+        height: 126px;
+        top: -103px;
+        box-shadow: 6px 6px 0 var(--pink);
+      }
+
       .cat-head::before,
-      .cat-head::after { width: 58px; height: 58px; top: -27px; }
-      .cat-eyes { width: 94px; font-size: 1.65rem; }
+      .cat-head::after {
+        width: 58px;
+        height: 58px;
+        top: -27px;
+      }
+
+      .cat-eyes {
+        width: 94px;
+        font-size: 1.65rem;
+      }
+
+      .hero-title {
+        font-size: clamp(2.9rem, 15vw, 4.25rem);
+        text-shadow:
+          3px 3px 0 var(--cream),
+          5px 5px 0 var(--text);
+      }
     }
   </style>
 </head>
@@ -292,22 +412,21 @@
   </main>
 
   <script>
-    const pContainer = document.getElementById('particles');
-    const items = ['🐾', '💗', '🎀', '✨', '🐱', '♡', '🌸', '🧶'];
+    const pContainer = document.getElementById("particles");
+    const items = ["🐾", "💗", "🎀", "✨", "🐱", "♡", "🌸", "🧶"];
 
-    for (let i = 0; i < 36; i++) {
-      const el = document.createElement('span');
-      el.className = 'particle';
+    for (let i = 0; i < 34; i++) {
+      const el = document.createElement("span");
+      el.className = "particle";
       el.textContent = items[Math.floor(Math.random() * items.length)];
-      el.style.cssText = `
-        left:${Math.random() * 100}vw;
-        font-size:${Math.random() * 24 + 15}px;
-        animation-duration:${Math.random() * 20 + 12}s;
-        animation-delay:${Math.random() * 15}s;
-      `;
+
+      el.style.left = `${Math.random() * 100}vw`;
+      el.style.fontSize = `${Math.random() * 22 + 14}px`;
+      el.style.animationDuration = `${Math.random() * 18 + 13}s`;
+      el.style.animationDelay = `${Math.random() * -18}s`;
+
       pContainer.appendChild(el);
     }
   </script>
 </body>
-
 </html>
