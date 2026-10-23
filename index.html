@@ -1,410 +1,2973 @@
 <!DOCTYPE html>
+
 <html lang="mn">
+
 <head>
+
 <meta charset="UTF-8" />
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Төрсөн өдрийн мэнд хүргэе</title>
+
+<meta name="theme-color" content="#fff0f5" />
+
+<title>For Someone Special ♡</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Caveat:wght@600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800;900&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
+
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <style>
-  :root{
-    --night:      #241328;
-    --night-2:    #341a3d;
-    --cream:      #fbeee0;
-    --cream-dim:  #e8d3c2;
-    --coral:      #ff8a5c;
-    --gold:       #ffc266;
-    --gold-dim:   #d9a44f;
-    --flame:      #ffb347;
-    --smoke:      #cfc3d6;
-    --line:       rgba(251,238,224,0.14);
+
+:root {
+
+  --pink: #ff91b8;
+
+  --pink-light: #ffd5e5;
+
+  --pink-dark: #e96b9b;
+
+  --lavender: #c9b5ff;
+
+  --lavender-light: #eee7ff;
+
+  --cream: #fffaf4;
+
+  --white: #ffffff;
+
+  --text: #75516d;
+
+  --text-light: #a889a4;
+
+  --yellow: #ffdb82;
+
+  --peach: #ffbba6;
+
+  --shadow: 0 24px 70px rgba(199, 124, 168, .16);
+
+}
+
+* {
+
+  margin: 0;
+
+  padding: 0;
+
+  box-sizing: border-box;
+
+}
+
+html {
+
+  min-height: 100%;
+
+}
+
+body {
+
+  min-height: 100vh;
+
+  min-height: 100dvh;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  padding: 36px 16px;
+
+  font-family: "Nunito", sans-serif;
+
+  color: var(--text);
+
+  background:
+
+    radial-gradient(
+
+      circle at 15% 15%,
+
+      rgba(255, 182, 213, .48),
+
+      transparent 32%
+
+    ),
+
+    radial-gradient(
+
+      circle at 88% 20%,
+
+      rgba(204, 185, 255, .43),
+
+      transparent 30%
+
+    ),
+
+    radial-gradient(
+
+      circle at 50% 95%,
+
+      rgba(255, 222, 193, .5),
+
+      transparent 35%
+
+    ),
+
+    linear-gradient(
+
+      145deg,
+
+      #fff4f8 0%,
+
+      #fff9f5 45%,
+
+      #f7f0ff 100%
+
+    );
+
+  overflow-x: hidden;
+
+  overflow-y: auto;
+
+  position: relative;
+
+}
+
+/* ---------------- BACKGROUND ---------------- */
+
+.background-glow {
+
+  position: fixed;
+
+  width: 300px;
+
+  height: 300px;
+
+  border-radius: 50%;
+
+  filter: blur(70px);
+
+  opacity: .38;
+
+  pointer-events: none;
+
+  z-index: 0;
+
+  animation: glowMove 9s ease-in-out infinite alternate;
+
+}
+
+.glow-one {
+
+  background: #ffb8d5;
+
+  top: -140px;
+
+  left: -100px;
+
+}
+
+.glow-two {
+
+  background: #c9b5ff;
+
+  bottom: -140px;
+
+  right: -100px;
+
+  animation-delay: -4s;
+
+}
+
+@keyframes glowMove {
+
+  0% {
+
+    transform: translate(0, 0) scale(1);
+
   }
 
-  *{ margin:0; padding:0; box-sizing:border-box; }
+  100% {
 
-  html,body{ height:100%; }
+    transform: translate(35px, 30px) scale(1.18);
 
-  body{
-    min-height:100vh;
-    display:grid;
-    place-items:center;
-    font-family:"Nunito", sans-serif;
-    color:var(--cream);
-    background:
-      radial-gradient(ellipse 60% 40% at 50% 8%, rgba(255,194,102,0.10), transparent 60%),
-      radial-gradient(ellipse 80% 60% at 15% 90%, rgba(255,138,92,0.08), transparent 60%),
-      linear-gradient(180deg, var(--night) 0%, var(--night-2) 100%);
-    overflow:hidden;
-    position:relative;
   }
 
-  /* soft starfield */
-  #stars{
-    position:fixed; inset:0; z-index:0; pointer-events:none;
-  }
-  .star{
-    position:absolute;
-    width:3px; height:3px;
-    background:var(--cream);
-    border-radius:50%;
-    opacity:.35;
-    animation:twinkle 3.2s ease-in-out infinite;
-  }
-  @keyframes twinkle{
-    0%,100%{ opacity:.15; }
-    50%{ opacity:.75; }
+}
+
+/* ---------------- FLOATING DECORATIONS ---------------- */
+
+#ambient {
+
+  position: fixed;
+
+  inset: 0;
+
+  overflow: hidden;
+
+  pointer-events: none;
+
+  z-index: 0;
+
+}
+
+.float-item {
+
+  position: absolute;
+
+  bottom: -40px;
+
+  opacity: 0;
+
+  animation: floatUp linear forwards;
+
+  user-select: none;
+
+  will-change: transform, opacity;
+
+}
+
+@keyframes floatUp {
+
+  0% {
+
+    transform: translate3d(0, 0, 0) rotate(0deg);
+
+    opacity: 0;
+
   }
 
-  .stage{
-    position:relative;
-    z-index:2;
-    width:min(480px, 92vw);
-    text-align:center;
-    padding:20px 0 0;
+  10% {
+
+    opacity: .65;
+
   }
 
-  .eyebrow{
-    font-family:"Caveat", cursive;
-    font-size:1.5rem;
-    color:var(--gold);
-    letter-spacing:.02em;
-    margin-bottom:6px;
-    opacity:.9;
+  50% {
+
+    transform: translate3d(30px, -50vh, 0) rotate(18deg);
+
   }
 
-  .prompt{
-    font-family:"Fraunces", serif;
-    font-weight:600;
-    font-size:clamp(1.35rem, 5vw, 1.7rem);
-    color:var(--cream);
-    line-height:1.35;
-    margin-bottom:34px;
-    min-height:2.7em;
-    transition:opacity .4s ease;
+  90% {
+
+    opacity: .45;
+
   }
 
-  /* ---------- CAKE ---------- */
-  .cake-wrap{
-    position:relative;
-    display:flex;
-    justify-content:center;
-    margin-bottom:8px;
+  100% {
+
+    transform: translate3d(-20px, -115vh, 0) rotate(-20deg);
+
+    opacity: 0;
+
   }
 
-  svg.cake{
-    width:min(320px, 78vw);
-    height:auto;
-    overflow:visible;
+}
+
+/* Twinkling stars */
+
+.star {
+
+  position: absolute;
+
+  width: 7px;
+
+  height: 7px;
+
+  background: white;
+
+  border-radius: 50%;
+
+  box-shadow: 0 0 10px rgba(255, 145, 184, .8);
+
+  animation: starTwinkle 2.5s ease-in-out infinite;
+
+}
+
+@keyframes starTwinkle {
+
+  0%, 100% {
+
+    opacity: .25;
+
+    transform: scale(.65);
+
   }
 
-  .plate{ fill:none; stroke:var(--line); stroke-width:2; }
-  .tier{ stroke:var(--night); stroke-width:2; }
-  .tier-bottom{ fill:var(--coral); }
-  .tier-top{ fill:#ffa374; }
-  .icing{ fill:var(--cream); }
-  .drip{ fill:var(--cream); }
-  .sprinkle{ opacity:.9; }
+  50% {
 
-  .candle-body{ fill:var(--gold); stroke:var(--night); stroke-width:1.5; }
-  .candle-stripe{ fill:var(--cream); opacity:.55; }
+    opacity: 1;
 
-  .wick{ stroke:#5b3a1a; stroke-width:2; stroke-linecap:round; }
+    transform: scale(1.3);
 
-  .flame-group{
-    cursor:pointer;
-    transform-origin:center bottom;
-  }
-  .flame-group:not(.blown) .flame{
-    animation:flicker 1.4s ease-in-out infinite;
-  }
-  .flame{
-    fill:var(--flame);
-    filter:drop-shadow(0 0 6px rgba(255,179,71,.85)) drop-shadow(0 0 14px rgba(255,140,60,.5));
-    transform-origin:center bottom;
-    transition:opacity .25s ease, transform .25s ease;
-  }
-  @keyframes flicker{
-    0%,100%{ transform:scaleY(1) rotate(-1.5deg); }
-    50%{ transform:scaleY(1.08) rotate(2deg); }
-  }
-  .flame-group.blown .flame{
-    opacity:0;
-    transform:scaleY(0.2);
   }
 
-  .smoke{
-    opacity:0;
-    fill:none;
-    stroke:var(--smoke);
-    stroke-width:2.4;
-    stroke-linecap:round;
-  }
-  .flame-group.blown .smoke{
-    animation:rise 1.4s ease-out forwards;
-  }
-  @keyframes rise{
-    0%{ opacity:.7; transform:translateY(0) scale(.6); }
-    100%{ opacity:0; transform:translateY(-26px) scale(1.3); }
+}
+
+/* ---------------- MAIN CARD ---------------- */
+
+.stage {
+
+  width: min(100%, 470px);
+
+  position: relative;
+
+  z-index: 2;
+
+  text-align: center;
+
+  padding: 34px 24px 30px;
+
+  background: rgba(255, 255, 255, .57);
+
+  border: 1px solid rgba(255, 255, 255, .88);
+
+  border-radius: 36px;
+
+  box-shadow:
+
+    var(--shadow),
+
+    inset 0 0 0 1px rgba(255, 222, 236, .28);
+
+  backdrop-filter: blur(20px);
+
+  -webkit-backdrop-filter: blur(20px);
+
+  animation: cardAppear 1s cubic-bezier(.2, .8, .2, 1) both;
+
+}
+
+@keyframes cardAppear {
+
+  from {
+
+    opacity: 0;
+
+    transform: translateY(28px) scale(.96);
+
   }
 
-  .hint-ring{
-    fill:none;
-    stroke:var(--gold);
-    stroke-width:1.5;
-    opacity:0;
-    transform-origin:center;
-  }
-  .flame-group:not(.blown):hover .hint-ring{
-    opacity:.55;
-    animation:pulseRing 1.2s ease-out infinite;
-  }
-  @keyframes pulseRing{
-    0%{ opacity:.6; transform:scale(.8); }
-    100%{ opacity:0; transform:scale(1.6); }
+  to {
+
+    opacity: 1;
+
+    transform: translateY(0) scale(1);
+
   }
 
-  /* ---------- reveal ---------- */
-  .reveal{
-    margin-top: 30px;
-    opacity:0;
-    transform:translateY(14px);
-    transition:opacity .7s ease, transform .7s ease;
-    pointer-events:none;
-  }
-  .reveal.show{
-    opacity:1;
-    transform:translateY(0);
-    pointer-events:auto;
+}
+
+/* ---------------- TEXT ---------------- */
+
+.eyebrow {
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 7px;
+
+  font-family: "Caveat", cursive;
+
+  font-size: 1.65rem;
+
+  font-weight: 700;
+
+  color: var(--pink-dark);
+
+  margin-bottom: 10px;
+
+  animation: gentleBounce 3s ease-in-out infinite;
+
+}
+
+.eyebrow::before,
+
+.eyebrow::after {
+
+  content: "♡";
+
+  font-family: "Nunito", sans-serif;
+
+  font-size: 1rem;
+
+  color: var(--pink);
+
+}
+
+@keyframes gentleBounce {
+
+  0%, 100% {
+
+    transform: translateY(0);
+
   }
 
-  .headline{
-    font-family:"Fraunces", serif;
-    font-weight:700;
-    font-size:clamp(2.1rem, 8vw, 3.1rem);
-    line-height:1.08;
-    color:var(--cream);
-  }
-  .headline .accent{
-    display:block;
-    font-family:"Caveat", cursive;
-    font-weight:700;
-    font-size:1.5em;
-    color:var(--coral);
-    margin-top:4px;
+  50% {
+
+    transform: translateY(-3px);
+
   }
 
-  .rule{
-    width:64px;
-    height:2px;
-    background:var(--gold-dim);
-    margin:22px auto;
-    opacity:.6;
+}
+
+.prompt {
+
+  font-family: "Fredoka", sans-serif;
+
+  font-size: clamp(1.25rem, 5vw, 1.65rem);
+
+  font-weight: 500;
+
+  color: #805b80;
+
+  line-height: 1.45;
+
+  min-height: 3em;
+
+  margin: 0 auto 4px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  transition:
+
+    opacity .3s ease,
+
+    transform .3s ease;
+
+}
+
+.prompt.changing {
+
+  opacity: 0;
+
+  transform: translateY(8px);
+
+}
+
+.prompt-sub {
+
+  font-size: .84rem;
+
+  color: var(--text-light);
+
+  margin-top: 3px;
+
+}
+
+/* ---------------- CAKE ---------------- */
+
+.cake-wrap {
+
+  position: relative;
+
+  margin: 0 auto;
+
+  width: 100%;
+
+  max-width: 350px;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  animation: cakeFloat 3.5s ease-in-out infinite;
+
+}
+
+@keyframes cakeFloat {
+
+  0%, 100% {
+
+    transform: translateY(0) rotate(0deg);
+
   }
 
-  .subline{
-    font-size:1rem;
-    color:var(--cream-dim);
-    line-height:1.6;
-    max-width:34ch;
-    margin:0 auto;
+  50% {
+
+    transform: translateY(-7px) rotate(.4deg);
+
   }
 
-  /* confetti-ish falling shapes, only after reveal */
-  #petals{
-    position:fixed; inset:0; z-index:1; pointer-events:none;
-    overflow:hidden;
-  }
-  .petal{
-    position:absolute;
-    top:-5%;
-    border-radius:2px;
-    animation:fall linear forwards;
-  }
-  @keyframes fall{
-    to{ transform:translateY(110vh) rotate(340deg); }
+}
+
+.cake {
+
+  width: 100%;
+
+  height: auto;
+
+  overflow: visible;
+
+  filter: drop-shadow(0 12px 12px rgba(197, 113, 153, .12));
+
+}
+
+.plate {
+
+  fill: #fff8fd;
+
+  stroke: #f0cce0;
+
+  stroke-width: 2;
+
+}
+
+.plate-top {
+
+  fill: #ffffff;
+
+  stroke: #f5d9e9;
+
+  stroke-width: 1.5;
+
+}
+
+.cake-bottom {
+
+  fill: #ffb4cf;
+
+  stroke: #f08eb5;
+
+  stroke-width: 2;
+
+}
+
+.cake-top {
+
+  fill: #d9c6ff;
+
+  stroke: #bda5f3;
+
+  stroke-width: 2;
+
+}
+
+.cake-bottom-front {
+
+  fill: #ff9fc2;
+
+}
+
+.cake-top-front {
+
+  fill: #c6afff;
+
+}
+
+.icing {
+
+  fill: #fffafc;
+
+  stroke: #f8e4ee;
+
+  stroke-width: 1;
+
+}
+
+.icing-shadow {
+
+  fill: #f8d9e8;
+
+}
+
+.sprinkle {
+
+  stroke-linecap: round;
+
+  stroke-width: 3.5;
+
+}
+
+.cake-decoration {
+
+  animation: decorationSparkle 2s ease-in-out infinite;
+
+  transform-box: fill-box;
+
+  transform-origin: center;
+
+}
+
+@keyframes decorationSparkle {
+
+  0%, 100% {
+
+    transform: scale(1);
+
+    opacity: .9;
+
   }
 
-  @media (max-width:420px){
-    .stage{ padding-top:8px; }
+  50% {
+
+    transform: scale(1.15);
+
+    opacity: 1;
+
   }
 
-  @media (prefers-reduced-motion: reduce){
-    .flame-group:not(.blown) .flame,
-    .star,
-    .flame-group:not(.blown):hover .hint-ring{
-      animation:none;
-    }
+}
+
+/* ---------------- CANDLES ---------------- */
+
+.candle {
+
+  cursor: pointer;
+
+}
+
+.candle-body {
+
+  fill: #fff0a9;
+
+  stroke: #edc875;
+
+  stroke-width: 1.5;
+
+}
+
+.candle-stripe {
+
+  fill: #ff9fc2;
+
+  opacity: .9;
+
+}
+
+.wick {
+
+  stroke: #876052;
+
+  stroke-width: 2;
+
+  stroke-linecap: round;
+
+}
+
+.flame-group {
+
+  cursor: pointer;
+
+  transform-box: fill-box;
+
+  transform-origin: center bottom;
+
+}
+
+.flame-group:not(.blown) {
+
+  animation: candleSway 2s ease-in-out infinite;
+
+}
+
+@keyframes candleSway {
+
+  0%, 100% {
+
+    transform: rotate(-2deg) translateY(0);
+
   }
+
+  50% {
+
+    transform: rotate(2deg) translateY(-2px);
+
+  }
+
+}
+
+.flame {
+
+  fill: #ffb64f;
+
+  stroke: #ff8b86;
+
+  stroke-width: 1;
+
+  transform-origin: center bottom;
+
+  filter:
+
+    drop-shadow(0 0 5px rgba(255, 170, 77, .8))
+
+    drop-shadow(0 0 12px rgba(255, 150, 166, .65));
+
+  animation: flameFlicker 1.05s ease-in-out infinite alternate;
+
+  transition:
+
+    opacity .25s ease,
+
+    transform .35s ease;
+
+}
+
+.flame-inner {
+
+  fill: #fff2b2;
+
+  pointer-events: none;
+
+}
+
+@keyframes flameFlicker {
+
+  0% {
+
+    transform: scale(1) rotate(-2deg);
+
+  }
+
+  35% {
+
+    transform: scale(.94, 1.08) rotate(2deg);
+
+  }
+
+  70% {
+
+    transform: scale(1.07, .95) rotate(-1deg);
+
+  }
+
+  100% {
+
+    transform: scale(.97, 1.06) rotate(2deg);
+
+  }
+
+}
+
+.hint-ring {
+
+  fill: none;
+
+  stroke: #ffacd0;
+
+  stroke-width: 2;
+
+  opacity: 0;
+
+  transform-box: fill-box;
+
+  transform-origin: center;
+
+}
+
+.flame-group:not(.blown):hover .hint-ring,
+
+.flame-group:not(.blown):focus .hint-ring {
+
+  animation: ringPulse 1.2s ease-out infinite;
+
+}
+
+@keyframes ringPulse {
+
+  0% {
+
+    opacity: .8;
+
+    transform: scale(.75);
+
+  }
+
+  100% {
+
+    opacity: 0;
+
+    transform: scale(1.65);
+
+  }
+
+}
+
+.flame-group.blown .flame {
+
+  opacity: 0;
+
+  transform: translateY(9px) scale(.1);
+
+  animation: none;
+
+}
+
+.flame-group.blown {
+
+  animation: none;
+
+}
+
+.smoke {
+
+  fill: none;
+
+  stroke: #c6b7c9;
+
+  stroke-width: 2.5;
+
+  stroke-linecap: round;
+
+  opacity: 0;
+
+}
+
+.flame-group.blown .smoke {
+
+  animation: smokeRise 1.3s ease-out forwards;
+
+}
+
+@keyframes smokeRise {
+
+  0% {
+
+    opacity: .8;
+
+    transform: translateY(0) scale(.7);
+
+  }
+
+  100% {
+
+    opacity: 0;
+
+    transform: translateY(-32px) translateX(5px) scale(1.4);
+
+  }
+
+}
+
+/* Candle click effect */
+
+.click-sparkle {
+
+  position: absolute;
+
+  pointer-events: none;
+
+  font-size: 20px;
+
+  animation: sparklePop .8s ease-out forwards;
+
+  z-index: 5;
+
+}
+
+@keyframes sparklePop {
+
+  0% {
+
+    opacity: 0;
+
+    transform: scale(.3) translateY(0);
+
+  }
+
+  35% {
+
+    opacity: 1;
+
+    transform: scale(1.2) translateY(-12px);
+
+  }
+
+  100% {
+
+    opacity: 0;
+
+    transform: scale(.7) translateY(-35px);
+
+  }
+
+}
+
+/* ---------------- CANDLE COUNTER ---------------- */
+
+.candle-progress {
+
+  display: flex;
+
+  justify-content: center;
+
+  gap: 9px;
+
+  margin: 0 auto 8px;
+
+}
+
+.progress-dot {
+
+  width: 9px;
+
+  height: 9px;
+
+  border-radius: 50%;
+
+  background: #f2dce8;
+
+  transition:
+
+    background .4s ease,
+
+    transform .4s ease,
+
+    box-shadow .4s ease;
+
+}
+
+.progress-dot.active {
+
+  background: var(--pink);
+
+  transform: scale(1.25);
+
+  box-shadow: 0 0 10px rgba(255, 145, 184, .5);
+
+}
+
+/* ---------------- REVEAL MESSAGE ---------------- */
+
+.reveal {
+
+  display: grid;
+
+  grid-template-rows: 0fr;
+
+  opacity: 0;
+
+  transform: translateY(18px) scale(.97);
+
+  margin-top: 0;
+
+  transition:
+
+    grid-template-rows .8s ease,
+
+    opacity .7s ease,
+
+    transform .7s cubic-bezier(.2, .8, .2, 1),
+
+    margin-top .7s ease;
+
+  pointer-events: none;
+
+}
+
+.reveal-inner {
+
+  overflow: hidden;
+
+}
+
+.reveal.show {
+
+  grid-template-rows: 1fr;
+
+  opacity: 1;
+
+  transform: translateY(0) scale(1);
+
+  margin-top: 15px;
+
+  pointer-events: auto;
+
+}
+
+.reveal-content {
+
+  padding-top: 8px;
+
+}
+
+.message-badge {
+
+  display: inline-block;
+
+  padding: 7px 15px;
+
+  border: 1px solid #f6d8e7;
+
+  border-radius: 100px;
+
+  background: rgba(255, 241, 247, .8);
+
+  font-size: .76rem;
+
+  font-weight: 800;
+
+  letter-spacing: .09em;
+
+  text-transform: uppercase;
+
+  color: #d47da4;
+
+  margin-bottom: 14px;
+
+}
+
+.headline {
+
+  font-family: "Fredoka", sans-serif;
+
+  font-weight: 600;
+
+  font-size: clamp(2rem, 8vw, 2.8rem);
+
+  line-height: 1.18;
+
+  color: #865d87;
+
+  text-wrap: balance;
+
+}
+
+.headline .accent {
+
+  display: block;
+
+  font-family: "Caveat", cursive;
+
+  font-size: clamp(2.3rem, 10vw, 3.5rem);
+
+  font-weight: 700;
+
+  color: #f17da8;
+
+  line-height: 1.2;
+
+  margin-top: 4px;
+
+}
+
+.rule {
+
+  width: 75px;
+
+  height: 3px;
+
+  border-radius: 100px;
+
+  background: linear-gradient(
+
+    90deg,
+
+    #ffc5d9,
+
+    #c9b5ff,
+
+    #ffc5d9
+
+  );
+
+  margin: 20px auto;
+
+}
+
+.subline {
+
+  max-width: 32ch;
+
+  margin: 0 auto;
+
+  font-size: .98rem;
+
+  line-height: 1.9;
+
+  color: #9a7a97;
+
+}
+
+.love-note {
+
+  margin-top: 18px;
+
+  font-family: "Caveat", cursive;
+
+  font-size: 1.6rem;
+
+  font-weight: 700;
+
+  color: #ec8caf;
+
+  animation: noteFloat 2.5s ease-in-out infinite;
+
+}
+
+@keyframes noteFloat {
+
+  0%, 100% {
+
+    transform: translateY(0);
+
+  }
+
+  50% {
+
+    transform: translateY(-4px);
+
+  }
+
+}
+
+/* ---------------- DECORATIVE HEARTS ---------------- */
+
+.corner-heart {
+
+  position: absolute;
+
+  font-size: 24px;
+
+  color: #f6a4c4;
+
+  pointer-events: none;
+
+  animation: heartBeat 2s ease-in-out infinite;
+
+}
+
+.heart-left {
+
+  top: 28px;
+
+  left: 23px;
+
+}
+
+.heart-right {
+
+  top: 28px;
+
+  right: 23px;
+
+  animation-delay: .7s;
+
+}
+
+@keyframes heartBeat {
+
+  0%, 100% {
+
+    transform: scale(1) rotate(-8deg);
+
+  }
+
+  50% {
+
+    transform: scale(1.2) rotate(8deg);
+
+  }
+
+}
+
+/* ---------------- FALLING PETALS ---------------- */
+
+#petals {
+
+  position: fixed;
+
+  inset: 0;
+
+  overflow: hidden;
+
+  pointer-events: none;
+
+  z-index: 4;
+
+}
+
+.petal {
+
+  position: absolute;
+
+  top: -25px;
+
+  border-radius: 70% 20% 70% 20%;
+
+  opacity: 0;
+
+  animation: petalFall linear forwards;
+
+}
+
+@keyframes petalFall {
+
+  0% {
+
+    opacity: 0;
+
+    transform: translate3d(0, -10px, 0) rotate(0deg);
+
+  }
+
+  10% {
+
+    opacity: .9;
+
+  }
+
+  50% {
+
+    transform: translate3d(40px, 50vh, 0) rotate(220deg);
+
+  }
+
+  100% {
+
+    opacity: 0;
+
+    transform: translate3d(-35px, 110vh, 0) rotate(520deg);
+
+  }
+
+}
+
+/* ---------------- REPLAY BUTTON ---------------- */
+
+.replay-button {
+
+  margin-top: 20px;
+
+  padding: 11px 21px;
+
+  border: 1px solid #f4cadd;
+
+  border-radius: 100px;
+
+  background: rgba(255, 244, 249, .95);
+
+  color: #d67da4;
+
+  font-family: "Nunito", sans-serif;
+
+  font-size: .9rem;
+
+  font-weight: 800;
+
+  cursor: pointer;
+
+  opacity: 0;
+
+  transform: translateY(8px);
+
+  pointer-events: none;
+
+  transition:
+
+    opacity .4s ease,
+
+    transform .4s ease,
+
+    background .25s ease,
+
+    box-shadow .25s ease;
+
+}
+
+.replay-button.visible {
+
+  opacity: 1;
+
+  transform: translateY(0);
+
+  pointer-events: auto;
+
+}
+
+.replay-button:hover {
+
+  background: #fff0f7;
+
+  box-shadow: 0 6px 20px rgba(232, 132, 174, .2);
+
+}
+
+.replay-button:active {
+
+  transform: scale(.96);
+
+}
+
+/* ---------------- RESPONSIVE ---------------- */
+
+@media (max-width: 480px) {
+
+  body {
+
+    padding: 22px 13px;
+
+  }
+
+  .stage {
+
+    padding: 28px 17px 25px;
+
+    border-radius: 30px;
+
+  }
+
+  .cake-wrap {
+
+    max-width: 330px;
+
+  }
+
+  .eyebrow {
+
+    font-size: 1.5rem;
+
+  }
+
+  .prompt {
+
+    font-size: 1.35rem;
+
+  }
+
+  .subline {
+
+    font-size: .92rem;
+
+  }
+
+  .corner-heart {
+
+    font-size: 19px;
+
+  }
+
+  .heart-left {
+
+    top: 18px;
+
+    left: 17px;
+
+  }
+
+  .heart-right {
+
+    top: 18px;
+
+    right: 17px;
+
+  }
+
+}
+
+@media (max-height: 720px) and (min-width: 481px) {
+
+  body {
+
+    padding-top: 20px;
+
+    padding-bottom: 20px;
+
+  }
+
+  .stage {
+
+    padding-top: 24px;
+
+    padding-bottom: 22px;
+
+  }
+
+  .cake-wrap {
+
+    max-width: 290px;
+
+  }
+
+}
+
+/* ---------------- ACCESSIBILITY ---------------- */
+
+button:focus-visible,
+
+.flame-group:focus-visible {
+
+  outline: 3px solid #d5baff;
+
+  outline-offset: 5px;
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+
+  *::before,
+
+  *::after {
+
+    animation-duration: .01ms !important;
+
+    animation-iteration-count: 1 !important;
+
+    scroll-behavior: auto !important;
+
+  }
+
+  .reveal {
+
+    transition: none;
+
+  }
+
+}
+
 </style>
+
 </head>
+
 <body>
 
-<div id="stars"></div>
-<div id="petals"></div>
+<div class="background-glow glow-one"></div>
+
+<div class="background-glow glow-two"></div>
+
+<div id="ambient" aria-hidden="true"></div>
+
+<div id="petals" aria-hidden="true"></div>
 
 <main class="stage">
-  <p class="eyebrow">хамгийн онцгой өдөр</p>
-  <p class="prompt" id="prompt">Лаа гурвыг дараад унтраагаарай 🕯️</p>
 
-  <div class="cake-wrap">
-    <svg class="cake" viewBox="0 0 320 260" xmlns="http://www.w3.org/2000/svg">
-      <ellipse class="plate" cx="160" cy="222" rx="118" ry="12"/>
+  <span class="corner-heart heart-left" aria-hidden="true">♡</span>
 
-      <!-- bottom tier -->
-      <rect class="tier tier-bottom" x="60" y="150" width="200" height="64" rx="10"/>
-      <path class="icing" d="M55 150
-        q10 -14 22 0 q10 -14 22 0 q10 -14 22 0 q10 -14 22 0 q10 -14 22 0 q10 -14 22 0 q10 -14 22 0 q10 -14 22 0
-        v14 h-200 z"/>
+  <span class="corner-heart heart-right" aria-hidden="true">♡</span>
 
-      <!-- top tier -->
-      <rect class="tier tier-top" x="95" y="96" width="130" height="58" rx="9"/>
-      <path class="icing" d="M92 96
-        q9 -13 20 0 q9 -13 20 0 q9 -13 20 0 q9 -13 20 0 q9 -13 20 0 q9 -13 20 0
-        v12 h-130 z"/>
+  <p class="eyebrow">a little wish for you</p>
 
-      <!-- sprinkles -->
-      <g class="sprinkle" fill="var(--gold)">
-        <rect x="80" y="176" width="10" height="4" rx="2" transform="rotate(20 80 176)"/>
-        <rect x="200" y="188" width="10" height="4" rx="2" transform="rotate(-15 200 188)"/>
-        <rect x="150" y="172" width="10" height="4" rx="2" transform="rotate(40 150 172)"/>
+  <p class="prompt" id="prompt" aria-live="polite">
+
+    Гурван лаагаа унтраагаад хүслээ шивнээрэй!
+
+  </p>
+
+  <p class="prompt-sub" id="promptSub">
+
+    Лааны дөл бүр дээр дараарай
+
+  </p>
+
+  <div class="cake-wrap" id="cakeWrap">
+
+    <svg
+
+      class="cake"
+
+      viewBox="0 0 340 285"
+
+      xmlns="http://www.w3.org/2000/svg"
+
+      role="img"
+
+      aria-label="Гурван лаатай хөөрхөн төрсөн өдрийн бялуу"
+
+    >
+
+      <defs>
+
+        <linearGradient id="cakeBottomGradient" x1="0" y1="0" x2="0" y2="1">
+
+          <stop offset="0%" stop-color="#ffc2d9"/>
+
+          <stop offset="100%" stop-color="#ff9fc2"/>
+
+        </linearGradient>
+
+        <linearGradient id="cakeTopGradient" x1="0" y1="0" x2="0" y2="1">
+
+          <stop offset="0%" stop-color="#e1d3ff"/>
+
+          <stop offset="100%" stop-color="#c5adff"/>
+
+        </linearGradient>
+
+        <radialGradient id="flameGradient" cx="50%" cy="25%" r="75%">
+
+          <stop offset="0%" stop-color="#fff6b5"/>
+
+          <stop offset="65%" stop-color="#ffc65e"/>
+
+          <stop offset="100%" stop-color="#ff8d8d"/>
+
+        </radialGradient>
+
+      </defs>
+
+      <!-- Ground shadow -->
+
+      <ellipse
+
+        cx="170"
+
+        cy="253"
+
+        rx="120"
+
+        ry="12"
+
+        fill="#d7a7c5"
+
+        opacity=".13"
+
+      />
+
+      <!-- Cake plate -->
+
+      <ellipse
+
+        class="plate"
+
+        cx="170"
+
+        cy="237"
+
+        rx="123"
+
+        ry="16"
+
+      />
+
+      <ellipse
+
+        class="plate-top"
+
+        cx="170"
+
+        cy="232"
+
+        rx="116"
+
+        ry="13"
+
+      />
+
+      <!-- Bottom cake tier -->
+
+      <path
+
+        d="M65 164
+
+           Q65 153 77 153
+
+           H263
+
+           Q275 153 275 164
+
+           V218
+
+           Q275 231 263 231
+
+           H77
+
+           Q65 231 65 218 Z"
+
+        fill="url(#cakeBottomGradient)"
+
+        stroke="#f08eb5"
+
+        stroke-width="2"
+
+      />
+
+      <!-- Bottom icing -->
+
+      <path
+
+        class="icing"
+
+        d="M59 160
+
+           Q70 144 83 157
+
+           Q95 143 108 157
+
+           Q121 142 134 157
+
+           Q147 143 160 157
+
+           Q173 142 186 157
+
+           Q199 143 212 157
+
+           Q225 142 238 157
+
+           Q251 143 264 157
+
+           Q274 151 281 161
+
+           L281 175
+
+           Q273 180 267 171
+
+           Q258 165 252 180
+
+           Q243 190 236 175
+
+           Q226 164 219 179
+
+           Q208 189 202 174
+
+           Q191 164 184 178
+
+           Q173 188 167 174
+
+           Q156 164 149 178
+
+           Q138 188 132 174
+
+           Q121 164 114 178
+
+           Q103 188 97 174
+
+           Q86 164 79 179
+
+           Q69 184 59 173 Z"
+
+      />
+
+      <!-- Bottom cake sprinkles -->
+
+      <g class="sprinkle" fill="none">
+
+        <path d="M92 197 l8 -5" stroke="#fff7b0"/>
+
+        <path d="M122 211 l8 4" stroke="#b7a0ff"/>
+
+        <path d="M151 194 l8 -5" stroke="#fffafc"/>
+
+        <path d="M189 207 l8 4" stroke="#ffdf8b"/>
+
+        <path d="M222 192 l8 -5" stroke="#fffafc"/>
+
+        <path d="M249 210 l8 -4" stroke="#c5adff"/>
+
+        <path d="M109 224 l7 -3" stroke="#fffafc"/>
+
+        <path d="M176 222 l7 -3" stroke="#fffafc"/>
+
+        <path d="M235 222 l7 -3" stroke="#ffdf8b"/>
+
       </g>
-      <g class="sprinkle" fill="var(--night)">
-        <rect x="110" y="184" width="9" height="4" rx="2" transform="rotate(-25 110 184)"/>
-        <rect x="228" y="170" width="9" height="4" rx="2" transform="rotate(15 228 170)"/>
+
+      <!-- Tiny hearts on the cake -->
+
+      <g fill="#fff7fb" class="cake-decoration">
+
+        <path d="M145 205
+
+          C135 197 126 205 145 218
+
+          C164 205 155 197 145 205Z"/>
+
+        <path d="M210 187
+
+          C203 181 197 187 210 196
+
+          C223 187 217 181 210 187Z"/>
+
       </g>
 
-      <!-- candles + flames: three interactive -->
-      <g class="candle" transform="translate(120,58)">
-        <rect class="candle-body" x="-6" y="0" width="12" height="40" rx="3"/>
-        <rect class="candle-stripe" x="-6" y="10" width="12" height="5"/>
-        <rect class="candle-stripe" x="-6" y="24" width="12" height="5"/>
-        <line class="wick" x1="0" y1="0" x2="0" y2="-7"/>
-        <g class="flame-group" data-candle="1" transform="translate(0,-8)">
-          <circle class="hint-ring" cx="0" cy="-6" r="14"/>
-          <path class="flame" d="M0 -20 C 7 -13 7 -3 0 2 C -7 -3 -7 -13 0 -20 Z"/>
-          <path class="smoke" d="M-3 -10 Q 3 -18 -2 -26"/>
+      <!-- Upper cake tier -->
+
+      <path
+
+        d="M105 112
+
+           Q105 101 117 101
+
+           H223
+
+           Q235 101 235 112
+
+           V157
+
+           Q235 168 223 168
+
+           H117
+
+           Q105 168 105 157 Z"
+
+        fill="url(#cakeTopGradient)"
+
+        stroke="#bda5f3"
+
+        stroke-width="2"
+
+      />
+
+      <!-- Upper icing -->
+
+      <path
+
+        class="icing"
+
+        d="M98 110
+
+           Q108 96 119 108
+
+           Q130 94 141 108
+
+           Q152 94 163 108
+
+           Q174 94 185 108
+
+           Q196 94 207 108
+
+           Q220 95 229 108
+
+           Q238 104 242 112
+
+           L242 125
+
+           Q234 131 228 121
+
+           Q220 114 213 126
+
+           Q204 134 197 122
+
+           Q189 115 182 127
+
+           Q173 134 166 122
+
+           Q158 115 151 127
+
+           Q142 134 135 122
+
+           Q127 115 120 127
+
+           Q111 133 98 122 Z"
+
+      />
+
+      <!-- Upper-tier decorations -->
+
+      <g class="sprinkle" fill="none">
+
+        <path d="M124 145 l7 -4" stroke="#fffafc"/>
+
+        <path d="M153 153 l7 3" stroke="#fff2ad"/>
+
+        <path d="M181 141 l7 -4" stroke="#fffafc"/>
+
+        <path d="M207 151 l7 -4" stroke="#ff9fc2"/>
+
+      </g>
+
+      <!-- Center heart -->
+
+      <path
+
+        d="M170 132
+
+           C157 121 148 132 170 149
+
+           C192 132 183 121 170 132Z"
+
+        fill="#fff7fb"
+
+        class="cake-decoration"
+
+      />
+
+      <!-- Candle 1 -->
+
+      <g class="candle" transform="translate(128,66)">
+
+        <rect
+
+          class="candle-body"
+
+          x="-6"
+
+          y="0"
+
+          width="12"
+
+          height="42"
+
+          rx="4"
+
+        />
+
+        <path
+
+          class="candle-stripe"
+
+          d="M-6 9 H6 V15 H-6Z
+
+             M-6 25 H6 V31 H-6Z"
+
+        />
+
+        <line
+
+          class="wick"
+
+          x1="0"
+
+          y1="0"
+
+          x2="0"
+
+          y2="-7"
+
+        />
+
+        <g
+
+          class="flame-group"
+
+          data-candle="1"
+
+          transform="translate(0,-8)"
+
+          role="button"
+
+          tabindex="0"
+
+          aria-label="Нэгдүгээр лааг унтраах"
+
+        >
+
+          <circle
+
+            class="hint-ring"
+
+            cx="0"
+
+            cy="-7"
+
+            r="15"
+
+          />
+
+          <path
+
+            class="flame"
+
+            d="M0 -25
+
+               C9 -15 8 -5 0 2
+
+               C-8 -5 -9 -15 0 -25Z"
+
+            fill="url(#flameGradient)"
+
+          />
+
+          <path
+
+            class="flame-inner"
+
+            d="M0 -15
+
+               C4 -10 3 -5 0 -2
+
+               C-3 -5 -4 -10 0 -15Z"
+
+          />
+
+          <path
+
+            class="smoke"
+
+            d="M-2 -8 Q5 -16 -1 -23"
+
+          />
+
         </g>
+
       </g>
 
-      <g class="candle" transform="translate(160,44)">
-        <rect class="candle-body" x="-6" y="0" width="12" height="54" rx="3"/>
-        <rect class="candle-stripe" x="-6" y="12" width="12" height="5"/>
-        <rect class="candle-stripe" x="-6" y="30" width="12" height="5"/>
-        <line class="wick" x1="0" y1="0" x2="0" y2="-7"/>
-        <g class="flame-group" data-candle="2" transform="translate(0,-8)">
-          <circle class="hint-ring" cx="0" cy="-6" r="14"/>
-          <path class="flame" d="M0 -21 C 7.5 -14 7.5 -3 0 2 C -7.5 -3 -7.5 -14 0 -21 Z"/>
-          <path class="smoke" d="M-3 -10 Q 3 -18 -2 -26"/>
+      <!-- Candle 2 -->
+
+      <g class="candle" transform="translate(170,53)">
+
+        <rect
+
+          class="candle-body"
+
+          x="-6"
+
+          y="0"
+
+          width="12"
+
+          height="55"
+
+          rx="4"
+
+        />
+
+        <path
+
+          class="candle-stripe"
+
+          d="M-6 11 H6 V17 H-6Z
+
+             M-6 29 H6 V35 H-6Z
+
+             M-6 45 H6 V50 H-6Z"
+
+        />
+
+        <line
+
+          class="wick"
+
+          x1="0"
+
+          y1="0"
+
+          x2="0"
+
+          y2="-7"
+
+        />
+
+        <g
+
+          class="flame-group"
+
+          data-candle="2"
+
+          transform="translate(0,-8)"
+
+          role="button"
+
+          tabindex="0"
+
+          aria-label="Хоёрдугаар лааг унтраах"
+
+        >
+
+          <circle
+
+            class="hint-ring"
+
+            cx="0"
+
+            cy="-7"
+
+            r="15"
+
+          />
+
+          <path
+
+            class="flame"
+
+            d="M0 -27
+
+               C10 -16 9 -5 0 2
+
+               C-9 -5 -10 -16 0 -27Z"
+
+            fill="url(#flameGradient)"
+
+          />
+
+          <path
+
+            class="flame-inner"
+
+            d="M0 -17
+
+               C4 -11 3 -5 0 -2
+
+               C-3 -5 -4 -11 0 -17Z"
+
+          />
+
+          <path
+
+            class="smoke"
+
+            d="M-2 -8 Q5 -16 -1 -23"
+
+          />
+
         </g>
+
       </g>
 
-      <g class="candle" transform="translate(200,58)">
-        <rect class="candle-body" x="-6" y="0" width="12" height="40" rx="3"/>
-        <rect class="candle-stripe" x="-6" y="10" width="12" height="5"/>
-        <rect class="candle-stripe" x="-6" y="24" width="12" height="5"/>
-        <line class="wick" x1="0" y1="0" x2="0" y2="-7"/>
-        <g class="flame-group" data-candle="3" transform="translate(0,-8)">
-          <circle class="hint-ring" cx="0" cy="-6" r="14"/>
-          <path class="flame" d="M0 -20 C 7 -13 7 -3 0 2 C -7 -3 -7 -13 0 -20 Z"/>
-          <path class="smoke" d="M-3 -10 Q 3 -18 -2 -26"/>
+      <!-- Candle 3 -->
+
+      <g class="candle" transform="translate(212,66)">
+
+        <rect
+
+          class="candle-body"
+
+          x="-6"
+
+          y="0"
+
+          width="12"
+
+          height="42"
+
+          rx="4"
+
+        />
+
+        <path
+
+          class="candle-stripe"
+
+          d="M-6 9 H6 V15 H-6Z
+
+             M-6 25 H6 V31 H-6Z"
+
+        />
+
+        <line
+
+          class="wick"
+
+          x1="0"
+
+          y1="0"
+
+          x2="0"
+
+          y2="-7"
+
+        />
+
+        <g
+
+          class="flame-group"
+
+          data-candle="3"
+
+          transform="translate(0,-8)"
+
+          role="button"
+
+          tabindex="0"
+
+          aria-label="Гуравдугаар лааг унтраах"
+
+        >
+
+          <circle
+
+            class="hint-ring"
+
+            cx="0"
+
+            cy="-7"
+
+            r="15"
+
+          />
+
+          <path
+
+            class="flame"
+
+            d="M0 -25
+
+               C9 -15 8 -5 0 2
+
+               C-8 -5 -9 -15 0 -25Z"
+
+            fill="url(#flameGradient)"
+
+          />
+
+          <path
+
+            class="flame-inner"
+
+            d="M0 -15
+
+               C4 -10 3 -5 0 -2
+
+               C-3 -5 -4 -10 0 -15Z"
+
+          />
+
+          <path
+
+            class="smoke"
+
+            d="M-2 -8 Q5 -16 -1 -23"
+
+          />
+
         </g>
+
       </g>
+
+      <!-- Floating stars around cake -->
+
+      <g fill="#ffc85e">
+
+        <path
+
+          class="cake-decoration"
+
+          d="M76 106 l3 7 7 3 -7 3 -3 7 -3 -7 -7 -3 7 -3Z"
+
+        />
+
+        <path
+
+          class="cake-decoration"
+
+          d="M258 90 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2Z"
+
+        />
+
+        <path
+
+          class="cake-decoration"
+
+          d="M82 135 l2 4 4 2 -4 2 -2 4 -2 -4 -4 -2 4 -2Z"
+
+        />
+
+        <path
+
+          class="cake-decoration"
+
+          d="M263 141 l2 4 4 2 -4 2 -2 4 -2 -4 -4 -2 4 -2Z"
+
+        />
+
+      </g>
+
+      <!-- Pink sparkle dots -->
+
+      <g fill="#ff9fc2">
+
+        <circle cx="93" cy="119" r="3"/>
+
+        <circle cx="249" cy="108" r="3"/>
+
+        <circle cx="77" cy="145" r="2.5"/>
+
+        <circle cx="274" cy="126" r="2.5"/>
+
+      </g>
+
     </svg>
+
   </div>
 
-  <div class="reveal" id="reveal">
-    <h1 class="headline">
-      Төрсөн өдрийн мэнд хүргэе
-      <span class="accent">хүсэл нь биелэх болтугай ✨</span>
-    </h1>
-    <div class="rule"></div>
-    <p class="subline">Энэ шинэ жил чиний хувьд гэрэлтэй, эрч хүчтэй, инээд баясалтай байх болтугай.</p>
+  <!-- Three-step progress -->
+
+  <div class="candle-progress" aria-label="Унтраасан лааны тоо">
+
+    <span class="progress-dot" id="dot1"></span>
+
+    <span class="progress-dot" id="dot2"></span>
+
+    <span class="progress-dot" id="dot3"></span>
+
   </div>
+
+  <!-- Birthday message -->
+
+  <section class="reveal" id="reveal" aria-hidden="true">
+
+    <div class="reveal-inner">
+
+      <div class="reveal-content">
+
+        <span class="message-badge">
+
+          ♡ YOUR SPECIAL DAY ♡
+
+        </span>
+
+        <h1 class="headline">
+
+          Төрсөн өдрийн
+
+          <span class="accent">
+
+            мэнд хүргэе! ♡
+
+          </span>
+
+        </h1>
+
+        <div class="rule"></div>
+
+        <p class="subline">
+
+          Энэ шинэ нас чинь аз жаргал, хайр,
+
+          инээд хөөр, гайхалтай дурсамжаар дүүрэн
+
+          байх болтугай. Хүссэн бүхэн чинь
+
+          биелж, өдөр бүр инээмсэглэж яваарай.
+
+        </p>
+
+        <p class="love-note">
+
+          You deserve all the happiness in the world ♡
+
+        </p>
+
+        <button
+
+          type="button"
+
+          class="replay-button"
+
+          id="replayButton"
+
+        >
+
+          Дахин эхлүүлэх ↻
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
 </main>
 
 <script>
-  // stars
-  const starsC = document.getElementById('stars');
-  for(let i=0;i<46;i++){
-    const s = document.createElement('div');
-    s.className = 'star';
-    s.style.left = Math.random()*100+'vw';
-    s.style.top = Math.random()*100+'vh';
-    s.style.animationDelay = (Math.random()*3)+'s';
-    starsC.appendChild(s);
-  }
 
-  const flameGroups = Array.from(document.querySelectorAll('.flame-group'));
-  const prompt = document.getElementById('prompt');
-  const reveal = document.getElementById('reveal');
+(() => {
 
-  const prompts = [
-    'Лаа гурвыг үлээгээд унтраагаарай 🕯️',
-    'Сайн байна, дараагийнхыг нь дараарай 🕯️',
-    'Сүүлчийнх! 🕯️',
-    ''
+  "use strict";
+
+  // --------------------------------
+
+  // ELEMENTS
+
+  // --------------------------------
+
+  const ambient = document.getElementById("ambient");
+
+  const petals = document.getElementById("petals");
+
+  const cakeWrap = document.getElementById("cakeWrap");
+
+  const prompt = document.getElementById("prompt");
+
+  const promptSub = document.getElementById("promptSub");
+
+  const reveal = document.getElementById("reveal");
+
+  const replayButton = document.getElementById("replayButton");
+
+  const flameGroups = [
+
+    ...document.querySelectorAll(".flame-group")
+
+  ];
+
+  const progressDots = [
+
+    document.getElementById("dot1"),
+
+    document.getElementById("dot2"),
+
+    document.getElementById("dot3")
+
+  ];
+
+  // --------------------------------
+
+  // CONFIGURATION
+
+  // --------------------------------
+
+  const reducedMotion = window.matchMedia(
+
+    "(prefers-reduced-motion: reduce)"
+
+  ).matches;
+
+  const messages = [
+
+    {
+
+      title: "Гайхалтай! ♡",
+
+      subtitle: "Одоо дараагийн лаагаа унтраагаарай"
+
+    },
+
+    {
+
+      title: "Хүслээ бодоорой! ✨",
+
+      subtitle: "Дахиад ганцхан лаа үлдлээ"
+
+    },
+
+    {
+
+      title: "Хүсэл чинь биелэх болтугай! ♡",
+
+      subtitle: "Өнөөдөр бол чиний өдөр"
+
+    }
+
   ];
 
   let blownCount = 0;
 
-  function blowCandle(group){
-    if(group.classList.contains('blown')) return;
-    group.classList.add('blown');
-    blownCount++;
-    prompt.style.opacity = 0;
-    setTimeout(()=>{
-      prompt.textContent = prompts[blownCount];
-      prompt.style.opacity = 1;
+  let isRevealed = false;
+
+  // --------------------------------
+
+  // BACKGROUND STARS
+
+  // --------------------------------
+
+  function createStars() {
+
+    const fragment = document.createDocumentFragment();
+
+    for (let i = 0; i < 32; i++) {
+
+      const star = document.createElement("span");
+
+      star.className = "star";
+
+      const size = Math.random() * 4 + 3;
+
+      star.style.width = `${size}px`;
+
+      star.style.height = `${size}px`;
+
+      star.style.left = `${Math.random() * 100}%`;
+
+      star.style.top = `${Math.random() * 100}%`;
+
+      star.style.animationDelay = `${Math.random() * 4}s`;
+
+      star.style.animationDuration = `${2 + Math.random() * 3}s`;
+
+      fragment.appendChild(star);
+
+    }
+
+    ambient.appendChild(fragment);
+
+  }
+
+  // --------------------------------
+
+  // FLOATING HEARTS
+
+  // --------------------------------
+
+  const floatingSymbols = [
+
+    "♡",
+
+    "♥",
+
+    "✧",
+
+    "✦",
+
+    "୨୧",
+
+    "⋆",
+
+    "✿"
+
+  ];
+
+  function createFloatingItem() {
+
+    if (document.hidden) return;
+
+    const item = document.createElement("span");
+
+    item.className = "float-item";
+
+    item.textContent =
+
+      floatingSymbols[
+
+        Math.floor(Math.random() * floatingSymbols.length)
+
+      ];
+
+    const isHeart = item.textContent === "♡" ||
+
+                    item.textContent === "♥";
+
+    item.style.left = `${Math.random() * 100}%`;
+
+    item.style.fontSize =
+
+      `${isHeart ? 14 + Math.random() * 15 : 10 + Math.random() * 12}px`;
+
+    item.style.color = [
+
+      "#ff91b8",
+
+      "#d2baff",
+
+      "#ffc98b",
+
+      "#ffb6d0",
+
+      "#c7b4f9"
+
+    ][Math.floor(Math.random() * 5)];
+
+    item.style.animationDuration =
+
+      `${8 + Math.random() * 8}s`;
+
+    ambient.appendChild(item);
+
+    const duration = parseFloat(item.style.animationDuration) * 1000;
+
+    window.setTimeout(() => {
+
+      item.remove();
+
+    }, duration + 300);
+
+  }
+
+  // --------------------------------
+
+  // UPDATE PROMPT
+
+  // --------------------------------
+
+  function updatePrompt(title, subtitle) {
+
+    prompt.classList.add("changing");
+
+    window.setTimeout(() => {
+
+      prompt.textContent = title;
+
+      promptSub.textContent = subtitle;
+
+      prompt.classList.remove("changing");
+
     }, 220);
 
-    if(blownCount === flameGroups.length){
-      setTimeout(revealMessage, 500);
-    }
   }
 
-  flameGroups.forEach(g=>{
-    g.addEventListener('click', ()=> blowCandle(g));
-    g.addEventListener('touchstart', (e)=>{ e.preventDefault(); blowCandle(g); }, {passive:false});
+  // --------------------------------
+
+  // CLICK SPARKLES
+
+  // --------------------------------
+
+  function createSparkles(x, y) {
+
+    const symbols = ["✧", "♡", "✦", "✨"];
+
+    for (let i = 0; i < 5; i++) {
+
+      const sparkle = document.createElement("span");
+
+      sparkle.className = "click-sparkle";
+
+      sparkle.textContent =
+
+        symbols[Math.floor(Math.random() * symbols.length)];
+
+      sparkle.style.left = `${x + (Math.random() - .5) * 65}px`;
+
+      sparkle.style.top = `${y + (Math.random() - .5) * 30}px`;
+
+      sparkle.style.color = [
+
+        "#ff91b8",
+
+        "#c5adff",
+
+        "#ffc85e"
+
+      ][Math.floor(Math.random() * 3)];
+
+      cakeWrap.appendChild(sparkle);
+
+      window.setTimeout(() => sparkle.remove(), 900);
+
+    }
+
+  }
+
+  // --------------------------------
+
+  // BLOW OUT CANDLE
+
+  // --------------------------------
+
+  function blowCandle(group) {
+
+    if (
+
+      group.classList.contains("blown") ||
+
+      isRevealed
+
+    ) {
+
+      return;
+
+    }
+
+    group.classList.add("blown");
+
+    blownCount++;
+
+    const index = Number(group.dataset.candle) - 1;
+
+    if (progressDots[index]) {
+
+      progressDots[index].classList.add("active");
+
+    }
+
+    // Sparkles around the candle.
+
+    const cakeRect = cakeWrap.getBoundingClientRect();
+
+    const flameRect = group.getBoundingClientRect();
+
+    const x =
+
+      flameRect.left +
+
+      flameRect.width / 2 -
+
+      cakeRect.left;
+
+    const y =
+
+      flameRect.top +
+
+      flameRect.height / 2 -
+
+      cakeRect.top;
+
+    createSparkles(x, y);
+
+    // Small haptic feedback on supported mobile devices.
+
+    if ("vibrate" in navigator) {
+
+      navigator.vibrate(25);
+
+    }
+
+    // Update the text.
+
+    const message = messages[blownCount - 1];
+
+    updatePrompt(message.title, message.subtitle);
+
+    // Finish after the last candle.
+
+    if (blownCount === flameGroups.length) {
+
+      isRevealed = true;
+
+      window.setTimeout(() => {
+
+        revealMessage();
+
+      }, 700);
+
+    }
+
+  }
+
+  // --------------------------------
+
+  // ACCESSIBLE CANDLE INTERACTIONS
+
+  // --------------------------------
+
+  flameGroups.forEach((group) => {
+
+    group.addEventListener("click", () => {
+
+      blowCandle(group);
+
+    });
+
+    group.addEventListener("keydown", (event) => {
+
+      if (
+
+        event.key === "Enter" ||
+
+        event.key === " "
+
+      ) {
+
+        event.preventDefault();
+
+        blowCandle(group);
+
+      }
+
+    });
+
   });
 
-  function revealMessage(){
-    reveal.classList.add('show');
-    launchConfetti();
-    launchPetals();
-  }
+  // --------------------------------
 
-  function launchConfetti(){
-    const duration = 2600;
-    const end = Date.now() + duration;
-    const colors = ['#ff8a5c', '#ffc266', '#fbeee0', '#ffa374'];
-    (function frame(){
-      confetti({ particleCount:4, angle:60, spread:55, origin:{x:0}, colors });
-      confetti({ particleCount:4, angle:120, spread:55, origin:{x:1}, colors });
-      if(Date.now() < end) requestAnimationFrame(frame);
-    })();
-  }
+  // CONFETTI
 
-  function launchPetals(){
-    const wrap = document.getElementById('petals');
-    const colors = ['#ff8a5c', '#ffc266', '#fbeee0'];
-    for(let i=0;i<26;i++){
-      const p = document.createElement('div');
-      p.className = 'petal';
-      const size = Math.random()*7+5;
-      p.style.width = size+'px';
-      p.style.height = size*0.4+'px';
-      p.style.left = Math.random()*100+'vw';
-      p.style.background = colors[Math.floor(Math.random()*colors.length)];
-      p.style.animationDuration = (Math.random()*3+4)+'s';
-      p.style.animationDelay = (Math.random()*1.2)+'s';
-      wrap.appendChild(p);
-      setTimeout(()=>p.remove(), 8000);
+  // --------------------------------
+
+  function launchConfetti() {
+
+    if (reducedMotion || typeof confetti !== "function") {
+
+      return;
+
     }
+
+    const colors = [
+
+      "#ff91b8",
+
+      "#ffc9df",
+
+      "#c9b5ff",
+
+      "#ffdb82",
+
+      "#ffbba6",
+
+      "#ffffff"
+
+    ];
+
+    // Center burst.
+
+    confetti({
+
+      particleCount: 110,
+
+      spread: 95,
+
+      startVelocity: 38,
+
+      gravity: .85,
+
+      scalar: 1.1,
+
+      ticks: 180,
+
+      origin: {
+
+        x: .5,
+
+        y: .55
+
+      },
+
+      colors
+
+    });
+
+    // Left and right bursts.
+
+    window.setTimeout(() => {
+
+      confetti({
+
+        particleCount: 55,
+
+        angle: 60,
+
+        spread: 70,
+
+        origin: {
+
+          x: 0,
+
+          y: .7
+
+        },
+
+        colors
+
+      });
+
+      confetti({
+
+        particleCount: 55,
+
+        angle: 120,
+
+        spread: 70,
+
+        origin: {
+
+          x: 1,
+
+          y: .7
+
+        },
+
+        colors
+
+      });
+
+    }, 250);
+
+    // A gentle second celebration.
+
+    window.setTimeout(() => {
+
+      confetti({
+
+        particleCount: 45,
+
+        spread: 120,
+
+        startVelocity: 25,
+
+        gravity: 1,
+
+        scalar: .9,
+
+        origin: {
+
+          x: .5,
+
+          y: .6
+
+        },
+
+        colors
+
+      });
+
+    }, 850);
+
   }
+
+  // --------------------------------
+
+  // FALLING PETALS
+
+  // --------------------------------
+
+  function launchPetals() {
+
+    if (reducedMotion) return;
+
+    const colors = [
+
+      "#ff91b8",
+
+      "#ffd0e1",
+
+      "#d2baff",
+
+      "#ffe1a8",
+
+      "#ffffff"
+
+    ];
+
+    for (let i = 0; i < 34; i++) {
+
+      const petal = document.createElement("span");
+
+      petal.className = "petal";
+
+      const size = 7 + Math.random() * 9;
+
+      petal.style.width = `${size}px`;
+
+      petal.style.height = `${size * .65}px`;
+
+      petal.style.left = `${Math.random() * 100}%`;
+
+      petal.style.background =
+
+        colors[Math.floor(Math.random() * colors.length)];
+
+      petal.style.animationDuration =
+
+        `${4 + Math.random() * 5}s`;
+
+      petal.style.animationDelay =
+
+        `${Math.random() * 2}s`;
+
+      petals.appendChild(petal);
+
+      window.setTimeout(() => {
+
+        petal.remove();
+
+      }, 11000);
+
+    }
+
+  }
+
+  // --------------------------------
+
+  // REVEAL BIRTHDAY MESSAGE
+
+  // --------------------------------
+
+  function revealMessage() {
+
+    reveal.classList.add("show");
+
+    reveal.setAttribute("aria-hidden", "false");
+
+    replayButton.classList.add("visible");
+
+    promptSub.textContent =
+
+      "Өнөөдөр чамд хамгийн сайхан бүхнийг хүсье ♡";
+
+    launchConfetti();
+
+    launchPetals();
+
+    // Let the message animate before scrolling into view.
+
+    window.setTimeout(() => {
+
+      reveal.scrollIntoView({
+
+        behavior: reducedMotion ? "auto" : "smooth",
+
+        block: "nearest"
+
+      });
+
+    }, 200);
+
+  }
+
+  // --------------------------------
+
+  // REPLAY
+
+  // --------------------------------
+
+  function replay() {
+
+    blownCount = 0;
+
+    isRevealed = false;
+
+    flameGroups.forEach((group) => {
+
+      group.classList.remove("blown");
+
+    });
+
+    progressDots.forEach((dot) => {
+
+      dot.classList.remove("active");
+
+    });
+
+    reveal.classList.remove("show");
+
+    reveal.setAttribute("aria-hidden", "true");
+
+    replayButton.classList.remove("visible");
+
+    prompt.textContent =
+
+      "Гурван лаагаа унтраагаад хүслээ шивнээрэй!";
+
+    promptSub.textContent =
+
+      "Лааны дөл бүр дээр дараарай";
+
+    prompt.classList.remove("changing");
+
+    petals.replaceChildren();
+
+    window.scrollTo({
+
+      top: 0,
+
+      behavior: reducedMotion ? "auto" : "smooth"
+
+    });
+
+  }
+
+  replayButton.addEventListener("click", replay);
+
+  // --------------------------------
+
+  // INITIALIZE
+
+  // --------------------------------
+
+  createStars();
+
+  // Keep the background animation lightweight.
+
+  window.setInterval(() => {
+
+    if (ambient.childElementCount < 48) {
+
+      createFloatingItem();
+
+    }
+
+  }, 650);
+
+  // Initial floating decorations.
+
+  for (let i = 0; i < 9; i++) {
+
+    window.setTimeout(() => {
+
+      createFloatingItem();
+
+    }, i * 350);
+
+  }
+
+})();
+
 </script>
 
 </body>
+
 </html>
